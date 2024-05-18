@@ -8,8 +8,8 @@ type Token = {
 };
 
 const API = axios.create({
-  // baseURL: "https://mapi.zapminds.com/",
-  baseURL: "http://localhost:8080/",
+  baseURL: "https://mapi.zapminds.com/",
+  // baseURL: "http://localhost:8080/",
 });
 
 function get_token() {
