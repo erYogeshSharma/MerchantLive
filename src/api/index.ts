@@ -8,8 +8,8 @@ type Token = {
 };
 
 const API = axios.create({
-  baseURL: "https://mapi.zapminds.com/api",
-  // baseURL: "https://9d928dfd80bff04725d6cbc67f2a7f7e.serveo.net/v1",
+  baseURL: "https://mapi.zapminds.com/",
+  // baseURL: "http://localhost:8080/",
 });
 
 function get_token() {
@@ -32,7 +32,14 @@ API.interceptors.request.use((req) => {
 export const sign_up = (form: SignUpForm) => API.post("/signup/basic", form);
 export const sign_in = (form: SignInForm) => API.post("/login/basic", form);
 export const log_out = () => API.delete("/logout");
-
+export const refresh_token = (refreshToken: string) =>
+  API.post("/token/refresh", { refreshToken });
+export const forgot_password = (email: string) =>
+  API.post("/forgot-password", { email });
+export const reset_password = (data: {
+  password: string;
+  resetPasswordToken: string;
+}) => API.post(`/forgot-password/reset`, data);
 //IMAGE UPLOAD
 export const get_presigned_url = (data: {
   key: string;

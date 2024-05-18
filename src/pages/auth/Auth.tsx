@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { signIn, signUp } from "../../store/auth/auth-api";
 import { LoadingButton } from "@mui/lab";
 import { clearErrors } from "../../store/auth/auth-slice";
+import PasswordInput from "../../components/form/PasswordInput";
 
 export default function SignIn() {
   const dispatch = useAppDispatch();
@@ -54,75 +55,84 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Paper elevation={2}>
-        <Box
+        <Stack
           sx={{
             p: 4,
-            marginTop: 8,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-          }}>
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {isSignUp ? "Sign up" : "Welcome back!"}
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}>
-            {isSignUp && (
+          }}
+        >
+          <Stack alignItems="center" mb={3}>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {isSignUp ? "Sign up" : "Welcome back!"}
+            </Typography>
+          </Stack>
+
+          <Stack component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Stack spacing={2}>
+              {isSignUp && (
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Full Name"
+                  name="name"
+                  autoComplete="name"
+                  autoFocus
+                />
+              )}
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 id="email"
-                label="Full Name"
-                name="name"
-                autoComplete="name"
-                autoFocus
+                label="Email Address"
+                name="email"
+                autoComplete="email"
               />
-            )}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            {!isSignUp && (
-              <Stack alignItems="flex-end">
-                <Link
-                  onClick={() => navigate("/forgot-password")}
-                  variant="body2">
-                  Forgot password?
-                </Link>
-              </Stack>
-            )}
-            <FormControlLabel
+              <PasswordInput
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+
+              {!isSignUp && (
+                <Stack alignItems="flex-end">
+                  <Link
+                    onClick={() => navigate("/forgot-password")}
+                    variant="body2"
+                  >
+                    Forgot password?
+                  </Link>
+                </Stack>
+              )}
+            </Stack>
+            <Stack direction="row" alignItems="center">
+              <Checkbox />
+              <Typography variant="body2">
+                I agree to <Link>Term and conditions</Link>{" "}
+              </Typography>
+            </Stack>
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <LoadingButton
+              size="large"
               loading={isAuthenticating}
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}>
+              sx={{ mt: 3, mb: 2 }}
+            >
               {isSignUp ? "Sign up" : "Sign in"}
             </LoadingButton>
             {error && <Alert severity="error">{error.toString()}</Alert>}
@@ -133,15 +143,16 @@ export default function SignIn() {
                     ? "Already have an account?"
                     : "Don't have an account?"}
                   <Link
-                    onClick={() => navigate(isSignUp ? "/login" : "/register")}>
+                    onClick={() => navigate(isSignUp ? "/login" : "/register")}
+                  >
                     &nbsp;
                     {isSignUp ? "Sign in" : "Sign up"}
                   </Link>
                 </Typography>
               </Grid>
             </Grid>
-          </Box>
-        </Box>
+          </Stack>
+        </Stack>
       </Paper>
     </Container>
   );

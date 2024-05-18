@@ -103,13 +103,13 @@ const ImageUploadButton = ({
                 color: (theme) => theme.palette.action.active,
                 fontSize:
                   (styles?.height as number) <= 100
-                    ? 40
+                    ? 30
                     : (styles?.height as number) - 50,
               }}
             />
 
             {(styles.height as number) > 90 && (
-              <Typography variant="caption"> {label} </Typography>
+              <Typography variant="txt12"> {label} </Typography>
             )}
           </Stack>
         </Tooltip>

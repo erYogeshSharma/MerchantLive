@@ -1,9 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -11,6 +9,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { forgot_password } from "../../api";
+import axios from "axios";
+import { LoadingButton } from "@mui/lab";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Copyright(props: any) {
@@ -19,7 +20,8 @@ function Copyright(props: any) {
       variant="body2"
       color="text.secondary"
       align="center"
-      {...props}>
+      {...props}
+    >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Merchant Live
@@ -34,13 +36,27 @@ function Copyright(props: any) {
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = React.useState(false);
+  const [message, setMessage] = React.useState("");
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      setLoading(true);
+      const res = await forgot_password(data.get("email") as string);
+      if (res?.data) {
+        setMessage("A password reset link has been sent to your email");
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      if (axios.isAxiosError(error)) {
+        setMessage(error.response?.data?.message);
+      } else {
+        setMessage("An error occured");
+      }
+    }
   };
 
   return (
@@ -54,18 +70,15 @@ export default function ForgotPassword() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}>
+          }}
+        >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Forgot Password
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -80,13 +93,19 @@ export default function ForgotPassword() {
               Login
             </Link>
 
-            <Button
+            <LoadingButton
+              size="large"
               type="submit"
               fullWidth
+              loading={loading}
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}>
+              sx={{ mt: 3, mb: 2 }}
+            >
               Send Email
-            </Button>
+            </LoadingButton>
+            <Typography variant="body2" color="error">
+              {message}
+            </Typography>
           </Box>
         </Box>
       </Paper>

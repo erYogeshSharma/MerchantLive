@@ -67,12 +67,12 @@ const secondary = amber;
 function getIconColors(color: Color, mode: mode) {
   const dark = mode === "dark";
   return {
-    backgroundColor: dark ? color[900] : color[50],
+    // backgroundColor: dark ? color[900] : color[50],
     color: dark ? color[100] : color[700],
-    border: `1px solid ${color[200]}`,
-    "&:hover": {
-      backgroundColor: dark ? color[600] : color[100],
-    },
+    // border: `1px solid ${color[200]}`,
+    // "&:hover": {
+    //   backgroundColor: dark ? color[600] : color[100],
+    // },
   };
 }
 const getTheme = (mode: mode): ThemeOptions => ({
@@ -80,6 +80,9 @@ const getTheme = (mode: mode): ThemeOptions => ({
     fontSize: 16,
     htmlFontSize: 10,
     fontFamily: inter,
+    txt12: {
+      fontSize: 12,
+    },
   },
 
   components: {

@@ -68,7 +68,6 @@ const AddSchedule = () => {
       })
     );
   }
-  console.log(JSON.parse(form.calender)["mon"].split("-")[0]);
   return (
     <Stack spacing={1.5} divider={<Divider />}>
       {Object.keys(JSON.parse(form.calender)).map((d) => {

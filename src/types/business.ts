@@ -8,8 +8,10 @@ export type ICalender = {
   sunday: string;
 };
 export type IProduct = {
+  _id: string;
   title: string;
   image: string;
+  description: string;
 };
 
 export type ILinkOption = {

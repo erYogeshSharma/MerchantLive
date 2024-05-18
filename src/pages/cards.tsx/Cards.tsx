@@ -13,14 +13,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getAllBusiness } from "../../store/business/business-api";
-import { EditOutlined } from "@mui/icons-material";
+import { Archive, EditOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { resetForm } from "../../store/business-form/business-form-slice";
-import Height from "./C";
 
 export default function DataTable() {
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ export default function DataTable() {
               <TableCell>Name</TableCell>
 
               <TableCell align="left">Title</TableCell>
-              <TableCell align="left">Active</TableCell>
+
               <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -94,14 +94,19 @@ export default function DataTable() {
                   </Stack>
                 </TableCell>
                 <TableCell align="left">{card.title}</TableCell>
-                <TableCell align="left">
-                  <Switch checked={card.isActive} />
-                </TableCell>
+
                 <TableCell align="right">
                   <Stack direction="row" spacing={1}>
-                    <IconButton onClick={() => handleEdit(card._id)}>
-                      <EditOutlined />
-                    </IconButton>
+                    <Tooltip title="Edit">
+                      <IconButton onClick={() => handleEdit(card._id)}>
+                        <EditOutlined />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Archive">
+                      <IconButton>
+                        <Archive />
+                      </IconButton>
+                    </Tooltip>
                   </Stack>
                 </TableCell>
               </TableRow>
@@ -109,7 +114,6 @@ export default function DataTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Height />
     </div>
   );
 }

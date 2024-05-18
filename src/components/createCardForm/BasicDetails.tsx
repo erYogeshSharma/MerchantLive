@@ -122,7 +122,7 @@ const BasicDetails = () => {
           size="small"
           fullWidth
           id="outlined-basic"
-          label="Phone Number"
+          label="Whatsapp Number"
           name="phone"
           type="number"
           variant="outlined"

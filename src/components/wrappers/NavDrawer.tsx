@@ -7,7 +7,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Analytics, CardTravelSharp } from "@mui/icons-material";
+import { Analytics, CardTravelSharp, Feedback } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Stack, Typography } from "@mui/material";
 
@@ -21,6 +21,11 @@ const navItems = [
     title: "Cards",
     icon: <CardTravelSharp />,
     href: "cards",
+  },
+  {
+    title: "Enquiries",
+    icon: <Feedback />,
+    href: "enquiries",
   },
 ];
 
@@ -50,7 +55,13 @@ const NavDrawer = ({
 
   const drawer = (
     <div>
-      <Stack px={2} sx={{ height: 64 }} direction="row" alignItems="center" justifyContent="flex-start">
+      <Stack
+        px={2}
+        sx={{ height: 64 }}
+        direction="row"
+        alignItems="center"
+        justifyContent="flex-start"
+      >
         <Typography variant="h6" color="text.primary" noWrap component="div">
           Merchant Live
         </Typography>
@@ -60,7 +71,10 @@ const NavDrawer = ({
       <List>
         {navItems.map((Item, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => navigate(`/${Item.href}`)} selected={currentPath === Item.href}>
+            <ListItemButton
+              onClick={() => navigate(`/${Item.href}`)}
+              selected={currentPath === Item.href}
+            >
               <ListItemIcon color="primary">{Item.icon}</ListItemIcon>
               <ListItemText primary={Item.title} />
             </ListItemButton>
@@ -70,7 +84,11 @@ const NavDrawer = ({
     </div>
   );
   return (
-    <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
+    <Box
+      component="nav"
+      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+      aria-label="mailbox folders"
+    >
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
       <Drawer
         variant="temporary"
