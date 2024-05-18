@@ -6,7 +6,6 @@ import {
   LinearProgress,
   Paper,
   Stack,
-  Switch,
   Table,
   TableBody,
   TableCell,
