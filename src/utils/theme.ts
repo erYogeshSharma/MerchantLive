@@ -44,7 +44,7 @@ declare module "@mui/material/styles" {
   }
 }
 
-const inter = "'Inter', sans-serif";
+const inter = `"Sora", sans-serif`;
 // Update the Typography's variant prop options
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
@@ -102,14 +102,29 @@ const getTheme = (mode: mode): ThemeOptions => ({
         },
       },
     },
-    MuiSvgIcon: {
+    MuiPaper: {
       styleOverrides: {
-        fontSizeSmall: {
-          height: 15,
-          width: 15,
+        root: {
+          borderRadius: 8,
         },
       },
     },
+    MuiSvgIcon: {
+      styleOverrides: {
+        fontSizeSmall: {
+          height: 20,
+          width: 20,
+        },
+      },
+    },
+    MuiListItemText: {
+      styleOverrides: {
+        primary: {
+          fontWeight: 500,
+        },
+      },
+    },
+
     MuiIconButton: {
       styleOverrides: {
         root: getIconColors(primary, mode),
@@ -141,7 +156,7 @@ const getTheme = (mode: mode): ThemeOptions => ({
     },
   },
   shape: {
-    borderRadius: 1,
+    borderRadius: 4,
   },
 });
 

@@ -5,7 +5,6 @@ import {
   responsiveFontSizes,
 } from "@mui/material/styles";
 import ColorModeContext from "./contexts/themeContext";
-import getTheme from "./utils/theme";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import AppRouter from "./routes/AppRouter";
@@ -15,6 +14,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import persistStore from "redux-persist/es/persistStore";
 import { CssBaseline } from "@mui/material";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import getTheme from "./utils/theme";
 
 const persistor = persistStore(store);
 export default function ToggleColorMode() {
@@ -28,8 +28,10 @@ export default function ToggleColorMode() {
     []
   );
 
-  const theme = React.useMemo(() =>
-    responsiveFontSizes(createTheme(getTheme(mode), [mode]))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const theme = React.useMemo(
+    () => responsiveFontSizes(createTheme(getTheme(mode))),
+    [mode]
   );
 
   return (

@@ -1,7 +1,6 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -9,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Paper, Stack } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { forgot_password, reset_password } from "../../api";
+import { reset_password } from "../../api";
 import axios from "axios";
 import { LoadingButton } from "@mui/lab";
 import PasswordInput from "../../components/form/PasswordInput";

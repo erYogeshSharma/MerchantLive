@@ -8,8 +8,8 @@ type Token = {
 };
 
 const API = axios.create({
-  baseURL: "https://mapi.zapminds.com/",
-  // baseURL: "http://localhost:8080/",
+  // baseURL: "https://mapi.zapminds.com/",
+  baseURL: "http://localhost:8080/",
 });
 
 function get_token() {
@@ -73,3 +73,6 @@ export const update_calender = (form: Partial<IBusinessForm>) =>
 export const get_links = () => API.get("/business/links");
 export const add_link = (link: { title: string; icon: string }) =>
   API.post("/business/link", link);
+
+export const get_business_enquiries = (businessId: string) =>
+  API.get(`/enquiry/get/${businessId}`);

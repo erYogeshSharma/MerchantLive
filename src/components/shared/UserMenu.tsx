@@ -1,18 +1,19 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "../../store/auth/auth-slice";
 import { log_out } from "../../api";
-
+import Avatar from "react-avatar";
 export default function UserMenu() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
@@ -45,9 +46,12 @@ export default function UserMenu() {
           <Typography variant="subtitle2" fontWeight={500} color="text.primary">
             {user.name}
           </Typography>
-          <Avatar src={user.profilePicUrl}>
-            {user.name.charAt(0).toUpperCase()}
-          </Avatar>
+          <Avatar
+            name={user.name}
+            src={"https://lorem.picsum/200/200"}
+            round
+            size="50px"
+          />
         </Stack>
       </Stack>
       <Menu
@@ -59,7 +63,6 @@ export default function UserMenu() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>

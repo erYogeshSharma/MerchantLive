@@ -9,7 +9,7 @@ import {
   styled,
 } from "@mui/material";
 import useFileUpload from "../../hooks/useFileUpload";
-import { AddPhotoAlternate, ElevatorSharp, Image } from "@mui/icons-material";
+import { AddPhotoAlternate } from "@mui/icons-material";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -55,8 +55,10 @@ const ImageUploadButton = ({
   }, [file]);
 
   function handleFileInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setFile(event.target.files[0]);
-    event.target.files = null;
+    if (event.target.files) {
+      setFile(event.target.files[0]);
+      event.target.files = null;
+    }
   }
 
   const [showEditIcon, setShowEditIcon] = useState(!image);
@@ -72,7 +74,7 @@ const ImageUploadButton = ({
     <Stack
       alignItems="center"
       onMouseEnter={() => setShowEditIcon(true)}
-      onMouseLeave={() => setShowEditIcon(false)}
+      onMouseLeave={() => image && setShowEditIcon(false)}
       sx={{ position: "relative", ...styles }}
       component="label"
     >

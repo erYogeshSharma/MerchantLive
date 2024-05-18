@@ -5,6 +5,7 @@ import { updateForm } from "../../store/business-form/business-form-slice";
 const AddAddress = () => {
   const dispatch = useAppDispatch();
   const { form, errors } = useAppSelector((state) => state.businessForm);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (e: any) => {
     dispatch(updateForm({ [e.target.name]: e.target.value }));
   };

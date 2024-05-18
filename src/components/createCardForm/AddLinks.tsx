@@ -47,6 +47,7 @@ const AddLinks = () => {
   }
   useEffect(() => {
     dispatch(getLinkOptions());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -90,7 +90,7 @@ export default function DashboardWrapper(props: Props) {
         }}
       >
         <Toolbar />
-        <Container maxWidth="md">{props.children}</Container>
+        <Container maxWidth="lg">{props.children}</Container>
       </Box>
     </Box>
   );

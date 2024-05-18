@@ -11,7 +11,13 @@ const AuthPage = () => {
         </Stack>
       </Grid>
 
-      <Grid item xs={0} md={7} lg={5}>
+      <Grid
+        item
+        xs={0}
+        md={7}
+        lg={5}
+        sx={{ display: { xs: "none", md: "block" } }}
+      >
         <Stack
           p={5}
           justifyContent="center"

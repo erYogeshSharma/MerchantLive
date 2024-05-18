@@ -1,8 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import * as API from "../../api";
-import { AxiosError } from "axios";
-import { IBusinessCard, IBusinessForm } from "../../types/business";
+import axios from "axios";
+import {
+  BusinessEnquiry,
+  IBusinessCard,
+  IBusinessForm,
+} from "../../types/business";
 
 export const getAllBusiness = createAsyncThunk<IBusinessCard[]>(
   "business/get_all",
@@ -11,8 +15,9 @@ export const getAllBusiness = createAsyncThunk<IBusinessCard[]>(
       const { data } = await API.get_all_business();
       return data.data;
     } catch (error) {
-      const axiosError = error as AxiosError;
-      return rejectWithValue(axiosError?.response?.data?.message);
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error?.response?.data?.message);
+      }
     }
   }
 );
@@ -24,8 +29,31 @@ export const getBusinessById = createAsyncThunk<IBusinessForm, string>(
       const { data } = await API.get_business(id);
       return data.data;
     } catch (error) {
-      const axiosError = error as AxiosError;
-      return rejectWithValue(axiosError?.response?.data?.message);
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error?.response?.data?.message);
+      }
     }
   }
 );
+
+/**========================================================================
+ * *                                GET ALL BUSINESS ENQUIRIES
+ *
+ *
+ *
+ *
+ *========================================================================**/
+
+export const getAllBusinessEnquiries = createAsyncThunk<
+  BusinessEnquiry[],
+  string
+>("business/get_all_enquiries", async (id, { rejectWithValue }) => {
+  try {
+    const { data } = await API.get_business_enquiries(id);
+    return data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error?.response?.data?.message);
+    }
+  }
+});

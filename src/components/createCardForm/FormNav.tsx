@@ -1,4 +1,4 @@
-import { Alert, Button, Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   setActiveStep,
@@ -10,18 +10,14 @@ import {
   createCard,
   updateCard,
 } from "../../store/business-form/business-form-api";
-import { useParams } from "react-router-dom";
 
 const FormNav = () => {
-  const params = useParams();
   const dispatch = useAppDispatch();
   const { form, activeStep, saving } = useAppSelector(
     (state) => state.businessForm
   );
 
-  console.log(activeStep);
-
-  const isEdit = params.id === form?._id;
+  const isEdit = !!form?._id;
 
   function handleNext() {
     const { isValid, errors } = validateForm(activeStep, form);

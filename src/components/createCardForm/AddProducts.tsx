@@ -1,4 +1,4 @@
-import { AddOutlined, Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import {
   Button,
   Divider,
@@ -146,7 +146,7 @@ const AddProducts = () => {
   const dispatch = useAppDispatch();
   const { form } = useAppSelector((state) => state.businessForm);
 
-  const [newProductForm, setNewProductForm] = useState({
+  const [newProductForm, setNewProductForm] = useState<IProduct>({
     _id: "",
     title: "",
     image: "",
@@ -166,7 +166,7 @@ const AddProducts = () => {
       return;
     }
     dispatch(updateForm({ products: [...form.products, newProductForm] }));
-    setNewProductForm({ _id: "", title: "", image: "", description: "" });
+    setNewProductForm({ title: "", image: "", description: "" });
     handleClose();
   }
 
@@ -176,12 +176,12 @@ const AddProducts = () => {
   }
 
   function handleOpen() {
-    setNewProductForm({ _id: "", title: "", image: "", description: "" });
+    setNewProductForm({ title: "", image: "", description: "" });
     setOpen(true);
   }
 
   function handleClose() {
-    setNewProductForm({ _id: "", title: "", image: "", description: "" });
+    setNewProductForm({ title: "", image: "", description: "" });
     setOpen(false);
   }
 

@@ -9,7 +9,9 @@ import { updateForm } from "../../store/business-form/business-form-slice";
 const CreateForm = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { businessDetails, loadingDetails } = useAppSelector((state) => state.business);
+  const { businessDetails, loadingDetails } = useAppSelector(
+    (state) => state.business
+  );
 
   const id = params.id;
 

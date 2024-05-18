@@ -1,14 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IBusinessCard, IBusinessForm } from "../../types/business";
-import { getBusinessById, getAllBusiness } from "./business-api";
+import {
+  BusinessEnquiry,
+  IBusinessCard,
+  IBusinessForm,
+} from "../../types/business";
+import {
+  getBusinessById,
+  getAllBusiness,
+  getAllBusinessEnquiries,
+} from "./business-api";
 
 type BusinessState = {
   cards: IBusinessCard[];
   businessDetails: IBusinessForm;
+  enquires: BusinessEnquiry[];
   error: string;
 
   loadingDetails: boolean;
   loadingCards: boolean;
+  loadingEnquiries: boolean;
 };
 
 const initialState: BusinessState = {
@@ -34,15 +44,7 @@ const initialState: BusinessState = {
     googleMapLink: "",
     links: [],
     products: [],
-    calender: {
-      mon: "",
-      tue: "",
-      wed: "",
-      thu: "",
-      fri: "",
-      sat: "",
-      sunday: "",
-    },
+    calender: "",
     enableEnquiryForm: false,
     enableAppointmentForm: false,
     isActive: false,
@@ -51,6 +53,8 @@ const initialState: BusinessState = {
 
   loadingCards: false,
   loadingDetails: false,
+  enquires: [],
+  loadingEnquiries: false,
 };
 
 export const businessSlice = createSlice({
@@ -86,6 +90,20 @@ export const businessSlice = createSlice({
     builder.addCase(getAllBusiness.fulfilled, (state, action) => {
       state.loadingCards = false;
       state.cards = action.payload;
+    });
+
+    //GET BUSINESS ENQUIRIES
+
+    builder.addCase(getAllBusinessEnquiries.pending, (state) => {
+      state.loadingEnquiries = true;
+    });
+    builder.addCase(getAllBusinessEnquiries.rejected, (state, action) => {
+      state.loadingEnquiries = false;
+      state.error = action.payload as string;
+    });
+    builder.addCase(getAllBusinessEnquiries.fulfilled, (state, action) => {
+      state.loadingEnquiries = false;
+      state.enquires = action.payload;
     });
   },
 

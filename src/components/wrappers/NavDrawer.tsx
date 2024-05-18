@@ -7,7 +7,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Analytics, CardTravelSharp, Feedback } from "@mui/icons-material";
+import {
+  Analytics,
+  CardTravelSharp,
+  Feedback,
+  Settings,
+} from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Stack, Typography } from "@mui/material";
 
@@ -26,6 +31,11 @@ const navItems = [
     title: "Enquiries",
     icon: <Feedback />,
     href: "enquiries",
+  },
+  {
+    title: "Settings",
+    icon: <Settings />,
+    href: "settings",
   },
 ];
 

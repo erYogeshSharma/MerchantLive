@@ -8,7 +8,7 @@ export type ICalender = {
   sunday: string;
 };
 export type IProduct = {
-  _id: string;
+  _id?: string;
   title: string;
   image: string;
   description: string;
@@ -81,3 +81,14 @@ export type IBusinessForm = {
 };
 
 export type FormKey = keyof IBusinessForm;
+
+export type BusinessEnquiry = {
+  _id: string;
+  name: string;
+  email: string;
+  business: string;
+  message: string;
+  contact: number;
+  createdAt: string;
+  updatedAt: string;
+};

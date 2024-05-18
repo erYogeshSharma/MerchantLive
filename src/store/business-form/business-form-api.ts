@@ -1,6 +1,7 @@
 import * as API from "../../api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IBusinessForm, ILinkOption } from "../../types/business";
+import axios from "axios";
 export const createCard = createAsyncThunk<
   IBusinessForm,
   Partial<IBusinessForm>
@@ -20,8 +21,9 @@ export const createCard = createAsyncThunk<
     });
     return data.data;
   } catch (error) {
-    console.log(error);
-    return rejectWithValue(error?.response?.data?.message);
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error?.response?.data?.message);
+    }
   }
 });
 
@@ -39,8 +41,9 @@ export const getLinkOptions = createAsyncThunk<ILinkOption[]>(
       const { data } = await API.get_links();
       return data.data;
     } catch (error) {
-      console.log(error);
-      return rejectWithValue(error?.response?.data?.message);
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error?.response?.data?.message);
+      }
     }
   }
 );
@@ -53,8 +56,9 @@ export const addLinkOption = createAsyncThunk<
     const { data } = await API.add_link(link);
     return data.data;
   } catch (error) {
-    console.log(error);
-    return rejectWithValue(error?.response?.data?.message);
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error?.response?.data?.message);
+    }
   }
 });
 
@@ -148,7 +152,10 @@ export const updateCard = createAsyncThunk<
 
     return res;
   } catch (error) {
-    console.log(error);
-    return rejectWithValue(error?.response?.data?.message);
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error?.response?.data?.message);
+    } else {
+      return rejectWithValue("An error occured");
+    }
   }
 });
