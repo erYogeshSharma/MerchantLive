@@ -10,6 +10,7 @@ const AuthPage = () => {
           <SignIn />
         </Stack>
       </Grid>
+
       <Grid item xs={0} md={7} lg={5}>
         <Stack
           p={5}
