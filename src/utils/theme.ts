@@ -1,13 +1,5 @@
 import { Color, darkScrollbar } from "@mui/material";
-import {
-  amber,
-  deepPurple,
-  green,
-  grey,
-  indigo,
-  orange,
-  red,
-} from "@mui/material/colors";
+import { amber, green, grey, indigo, red } from "@mui/material/colors";
 import { ThemeOptions } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
