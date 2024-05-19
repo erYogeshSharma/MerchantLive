@@ -37,7 +37,7 @@ export default function DataTable() {
 
       <Stack>
         <Grid container spacing={2}>
-          {cards.map((card) => (
+          {cards?.map((card) => (
             <BusinessCard business={card} />
           ))}
         </Grid>

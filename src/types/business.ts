@@ -78,6 +78,7 @@ export type IBusinessForm = {
   enableAppointmentForm: boolean;
 
   isActive: boolean;
+  theme: string;
 };
 
 export type FormKey = keyof IBusinessForm;

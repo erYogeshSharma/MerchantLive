@@ -19,9 +19,10 @@ const Analytics = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(cards);
   return (
     <Box>
-      {cards.length > 0 ? (
+      {cards?.length > 0 ? (
         <PageTitle title="Analytics"></PageTitle>
       ) : (
         <StaticPageWrapper

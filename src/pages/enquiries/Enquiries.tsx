@@ -7,6 +7,7 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
+  useMediaQuery,
 } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,12 +21,15 @@ import image from "../../assets/design.svg";
 import EnquiryCard from "../../components/cards/EnquiryCard";
 import PageTitle from "../../components/shared/PageTitle";
 import StaticPageWrapper from "../../components/wrappers/StaticPageWrapper";
+import EnquiryTable from "./EnquiryTable";
 
 const Enquiries = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const businessId = params.bId;
+
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
 
   const handleChange = (event: SelectChangeEvent) => {
     navigate(`/enquiries/${event.target.value}`);
@@ -43,14 +47,17 @@ const Enquiries = () => {
         dispatch(getAllBusiness());
       }
     } else {
-      if (!cards.length) {
-        dispatch(getAllBusiness());
-      }
-      dispatch(getAllBusinessEnquiries(businessId));
+      dispatch(getAllBusinessEnquiries(businessId as string));
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [businessId, cards]);
+  }, [businessId]);
+
+  useEffect(() => {
+    if (cards.length > 0 && !businessId) {
+      navigate(`/enquiries/${cards[0]._id}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cards]);
 
   return (
     <Grid>
@@ -71,13 +78,19 @@ const Enquiries = () => {
       {loadingEnquiries && <LinearProgress />}
       <Stack>
         {enquires.length > 0 ? (
-          <Grid container alignItems="flex-start" spacing={2}>
-            {enquires.map((enquiry) => (
-              <Grid key={enquiry._id} item xs={12} sm={12} md={6} lg={4}>
-                <EnquiryCard enquiry={enquiry} />
+          <>
+            {isSmallScreen ? (
+              <Grid container alignItems="flex-start" spacing={2}>
+                {enquires.map((enquiry) => (
+                  <Grid key={enquiry._id} item xs={12} sm={12} md={6} lg={4}>
+                    <EnquiryCard enquiry={enquiry} />
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
+            ) : (
+              <EnquiryTable enquiries={enquires} />
+            )}
+          </>
         ) : (
           <StaticPageWrapper
             image={image}

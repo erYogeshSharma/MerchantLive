@@ -1,69 +1,50 @@
-import { Box, Paper, Tab, Tabs } from "@mui/material";
-import React from "react";
+import { Box } from "@mui/material";
+import { useEffect } from "react";
+// import ThemeSelector from "../../components/shared/ThemeSelector";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import PageTitle from "../../components/shared/PageTitle";
-import {
-  AccountBoxOutlined,
-  PaymentOutlined,
-  StorefrontOutlined,
-} from "@mui/icons-material";
+import { useParams } from "react-router-dom";
+import { getBusinessById } from "../../store/business/business-api";
+// import { update_settings } from "../../api";
+import PhoneMockup from "../../components/shared/PhoneMockup";
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 const Settings = () => {
-  const [value, setValue] = React.useState(0);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleChange = (_: any, newValue: number) => {
-    setValue(newValue);
-  };
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const { businessDetails } = useAppSelector((state) => state.business);
+  const businessId = params.bId;
+  // const [t, setT] = React.useState("light");
+  useEffect(() => {
+    if (
+      !businessDetails ||
+      (businessDetails && businessDetails._id !== businessId)
+    ) {
+      dispatch(getBusinessById(businessId as string));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // async function changeTheme(theme: string) {
+  //   try {
+  //     const { data } = await update_settings({ theme: theme, _id: businessId });
+  //     setT(theme);
+  //   } catch (error) {}
+  // }
   return (
     <Box>
       <PageTitle title="Settings" />
-      <Paper
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          height: "calc(100vh - 190px)",
-        }}
-      >
-        <Box
-          sx={{
-            borderColor: "divider",
-            borderRight: 2,
-            borderRightColor: "divider",
-          }}
-        >
-          <Tabs
-            orientation="vertical"
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab
-              icon={<AccountBoxOutlined />}
-              iconPosition="start"
-              label="Profile"
-              {...a11yProps(0)}
-            />
-            <Tab
-              icon={<StorefrontOutlined />}
-              iconPosition="start"
-              label="Cards"
-              {...a11yProps(2)}
-            />
-            <Tab
-              icon={<PaymentOutlined />}
-              iconPosition="start"
-              label="Billing"
-              {...a11yProps(1)}
-            />
-          </Tabs>
-        </Box>
-      </Paper>
+      {/* <Paper>
+        <Grid container spacing={2} p={2}>
+          <Grid item>
+          
+          </Grid>
+          <Grid item>
+            <Stack sx={{ height: "calc(100vh - 220px)", overflowY: "auto" }}>
+              <ThemeSelector onClick={changeTheme} value={"light"} />
+            </Stack>
+          </Grid>
+        </Grid>
+      </Paper> */}
+      <PhoneMockup src="https://id.zapminds.com/saul-goodman" />
     </Box>
   );
 };

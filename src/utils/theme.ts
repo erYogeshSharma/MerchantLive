@@ -152,7 +152,7 @@ const getTheme = (mode: mode): ThemeOptions => ({
 
     background: {
       default: mode === "light" ? primary[50] : grey[900],
-      paper: mode === "light" ? "#fff" : grey[900],
+      paper: mode === "light" ? "#fff" : grey[800],
     },
   },
   shape: {

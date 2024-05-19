@@ -48,6 +48,7 @@ const initialState: BusinessState = {
     enableEnquiryForm: false,
     enableAppointmentForm: false,
     isActive: false,
+    theme: "",
   },
   error: "",
 

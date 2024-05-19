@@ -52,6 +52,7 @@ const initialState: FormSlice = {
     calender: "",
     _id: "",
     linkId: "",
+    theme: "",
   },
 
   saving: false,

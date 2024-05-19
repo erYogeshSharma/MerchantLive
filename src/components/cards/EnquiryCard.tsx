@@ -1,29 +1,14 @@
 import { BusinessEnquiry } from "../../types/business";
-import {
-  Avatar,
-  Collapse,
-  Divider,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { createAvatar } from "@dicebear/core";
-import { adventurer } from "@dicebear/collection";
+import { Collapse, Divider, Paper, Stack, Typography } from "@mui/material";
+
 import moment from "moment";
 import { EmailOutlined, Phone } from "@mui/icons-material";
-import { useMemo } from "react";
+
+import RandomAvatar from "../shared/RandomAvatar";
 
 const EnquiryCard = ({ enquiry }: { enquiry: BusinessEnquiry }) => {
   //   const length = 100;
   //   const [text, setText] = useState(enquiry.message.substring(0, length));
-  const avatar = useMemo(() => {
-    return createAvatar(adventurer, {
-      seed: enquiry.name,
-      backgroundType: ["gradientLinear"],
-      backgroundColor: ["ffdfbf", "d1d4f9", "c0aede"],
-    }).toDataUriSync();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   //   const toggleText = () => {
   //     if (text.length === length) {
@@ -37,7 +22,7 @@ const EnquiryCard = ({ enquiry }: { enquiry: BusinessEnquiry }) => {
     <Paper>
       <Stack>
         <Stack direction="row" alignItems="center" p={1} spacing={1}>
-          <Avatar style={{ height: 70, width: 70 }} src={avatar} />
+          <RandomAvatar name={enquiry.name} size={70} />
 
           <Stack>
             <Typography variant="body1" fontWeight={600}>

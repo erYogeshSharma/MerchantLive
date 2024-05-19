@@ -37,6 +37,7 @@ const AppRouter = () => {
           <Route path="/cards/edit/:id" element={<CreateForm />} />
           <Route path="/cards/create" element={<CreateForm />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/:bId" element={<Settings />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

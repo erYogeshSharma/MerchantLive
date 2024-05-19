@@ -9,7 +9,8 @@ type Token = {
 
 const API = axios.create({
   baseURL: "https://mapi.zapminds.com/",
-  // baseURL: "http://localhost:8080/",
+  // baseURL: "http://localhost:8080",
+  // baseURL: "https://9b37-2406-7400-98-df77-61dd-533e-fa3d-9f42.ngrok-free.app/",
 });
 
 function get_token() {
@@ -23,6 +24,7 @@ API.interceptors.request.use((req) => {
   const token = get_token();
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;
+    req.headers["ngrok-skip-browser-warning"] = "true";
   }
 
   return req;
