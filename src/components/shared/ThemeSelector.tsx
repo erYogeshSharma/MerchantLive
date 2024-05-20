@@ -1,11 +1,15 @@
-import { Paper, Stack, Typography } from "@mui/material";
+import {
+  LinearProgress,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { themes } from "../../constants/daisy-themes";
-import { Check } from "@mui/icons-material";
 
 const ThemeButton = ({
   theme,
-  onClick,
-  selected = false,
 }: {
   theme: string;
   onClick: (theme: string) => void;
@@ -20,18 +24,17 @@ const ThemeButton = ({
       }}
     >
       <Stack
-        spacing={1}
-        onClick={() => onClick(theme)}
+        spacing={2}
         direction="row"
         alignItems="center"
         justifyContent="space-between"
         p={1.5}
-        width={300}
         sx={{
           cursor: "pointer",
         }}
       >
         <Typography
+          width={150}
           variant="caption"
           fontWeight={600}
           sx={{
@@ -44,18 +47,6 @@ const ThemeButton = ({
         >
           {theme.replace(theme[0], theme[0].toUpperCase())}{" "}
         </Typography>
-        <Stack width={30}>
-          {selected && (
-            <Check
-              color="primary"
-              sx={{
-                background: (theme) => theme.palette.primary.light,
-                p: 0.5,
-                borderRadius: "50%",
-              }}
-            />
-          )}
-        </Stack>
         <Stack direction="row" alignItems="center" spacing={0.3}>
           {colorKeys.map((color) => (
             <Stack
@@ -79,20 +70,39 @@ const ThemeButton = ({
 const ThemeSelector = ({
   value,
   onClick,
+  loading = false,
 }: {
   value: string;
   onClick: (theme: string) => void;
+  loading?: boolean;
 }) => {
   return (
-    <Stack spacing={1} alignItems="flex-start">
-      {Object.keys(themes).map((theme, index) => (
-        <ThemeButton
-          onClick={onClick}
-          theme={theme}
-          key={index}
-          selected={value === theme}
-        />
-      ))}
+    <Stack>
+      <Typography variant="body2" fontWeight={500}>
+        Select Theme
+      </Typography>
+      {loading && <LinearProgress />}
+      <Select
+        disabled={loading}
+        value={value}
+        onChange={(e) => onClick(e.target.value)}
+        sx={{
+          "& .MuiSelect-select": {
+            p: 1,
+          },
+        }}
+      >
+        {Object.keys(themes).map((theme, index) => (
+          <MenuItem sx={{ py: 1 }} value={theme} key={index}>
+            <ThemeButton
+              onClick={onClick}
+              theme={theme}
+              key={index}
+              selected={value === theme}
+            />
+          </MenuItem>
+        ))}
+      </Select>
     </Stack>
   );
 };

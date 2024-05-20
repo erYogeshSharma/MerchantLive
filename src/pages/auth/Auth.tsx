@@ -27,6 +27,10 @@ export default function SignIn() {
     dispatch(clearErrors());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /* -------------------------------------------------------------------------- */
+  /*                              SUBMIT AUTH FORM                              */
+  /* -------------------------------------------------------------------------- */
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

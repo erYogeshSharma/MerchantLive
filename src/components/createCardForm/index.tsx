@@ -39,7 +39,10 @@ const CreateCardForm = () => {
           <Stack
             p={2}
             spacing={2}
-            sx={{ height: "calc(100vh - 250px)", overflowY: "auto" }}
+            sx={{
+              height: { xs: "calc(100vh - 240px)", md: "calc(100vh - 300px)" },
+              overflowY: "auto",
+            }}
           >
             <Stack>
               <Typography variant="body1" fontWeight={600}>

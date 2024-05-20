@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { updateForm } from "../../store/business-form/business-form-slice";
 import { LoadingButton } from "@mui/lab";
 import ImageUploadButton from "../shared/ImageUploadButton";
-import DrawerContainer from "../wrappers/DrawerContainer";
+import ModalContainer from "../wrappers/ModalContainer";
 
 const ProductCard = ({
   product,
@@ -47,8 +47,8 @@ const ProductCard = ({
   return (
     <Paper variant="outlined">
       <Stack
-        direction="row"
-        alignItems="center"
+        direction={{ xs: "column", md: "row" }}
+        alignItems="flex-start"
         justifyContent="space-between"
         spacing={2}
         p={2}
@@ -197,7 +197,7 @@ const AddProducts = () => {
           Add Product/Service
         </Button>
       </Stack>
-      <DrawerContainer
+      <ModalContainer
         footer={
           <Stack p={2}>
             <LoadingButton
@@ -244,7 +244,7 @@ const AddProducts = () => {
             }
           />
         </Stack>
-      </DrawerContainer>
+      </ModalContainer>
     </Stack>
   );
 };

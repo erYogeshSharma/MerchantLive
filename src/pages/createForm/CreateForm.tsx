@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { LinearProgress } from "@mui/material";
 import { getBusinessById } from "../../store/business/business-api";
 import { updateForm } from "../../store/business-form/business-form-slice";
+import PageTitle from "../../components/shared/PageTitle";
 
 const CreateForm = () => {
   const params = useParams();
@@ -30,6 +31,7 @@ const CreateForm = () => {
   }, [businessDetails]);
   return (
     <div>
+      <PageTitle title={id ? "Update Card" : "Create Card"} />
       {loadingDetails && <LinearProgress />}
       <CreateCardForm />
     </div>

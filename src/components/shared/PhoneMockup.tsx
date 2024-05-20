@@ -2,6 +2,7 @@ import { Stack, useMediaQuery } from "@mui/material";
 
 type Props = {
   src: string;
+  theme?: string;
 };
 const PhoneMockup = (props: Props) => {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
@@ -16,6 +17,7 @@ const PhoneMockup = (props: Props) => {
       }}
     >
       <iframe
+        key={props.theme}
         src={props.src}
         style={{
           width: "100%",

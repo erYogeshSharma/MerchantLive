@@ -10,6 +10,7 @@ const PageTitle = ({
 }) => {
   return (
     <Stack
+      mt={{ xs: 2, md: 0 }}
       mb={2}
       direction="row"
       alignItems="center"

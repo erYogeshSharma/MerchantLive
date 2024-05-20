@@ -2,6 +2,10 @@ import * as API from "../../api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IBusinessForm, ILinkOption } from "../../types/business";
 import axios from "axios";
+
+/* -------------------------------------------------------------------------- */
+/*                            CREATE BUSINESS CARD                            */
+/* -------------------------------------------------------------------------- */
 export const createCard = createAsyncThunk<
   IBusinessForm,
   Partial<IBusinessForm>
@@ -27,13 +31,9 @@ export const createCard = createAsyncThunk<
   }
 });
 
-/**==============================================
- *                Get Links options for form
- *
- *
- *
- *
- *=============================================**/
+/* -------------------------------------------------------------------------- */
+/*                              GET LINK OPTIONS                              */
+/* -------------------------------------------------------------------------- */
 export const getLinkOptions = createAsyncThunk<ILinkOption[]>(
   "form/getLinkOptions",
   async (_, { rejectWithValue }) => {
@@ -48,6 +48,9 @@ export const getLinkOptions = createAsyncThunk<ILinkOption[]>(
   }
 );
 
+/* -------------------------------------------------------------------------- */
+/*                             ADD NEW LINK OPTION                            */
+/* -------------------------------------------------------------------------- */
 export const addLinkOption = createAsyncThunk<
   ILinkOption,
   { title: string; icon: string }
@@ -62,13 +65,9 @@ export const addLinkOption = createAsyncThunk<
   }
 });
 
-/**==============================================
- *                Update Card for each step
- *
- *
- *
- *
- *=============================================**/
+/* -------------------------------------------------------------------------- */
+/*                        UPDATE CARD HAND HANDLE STEP                        */
+/* -------------------------------------------------------------------------- */
 export const updateCard = createAsyncThunk<
   { newStep: number; newForm: IBusinessForm },
   { step: number; form: Partial<IBusinessForm> }
@@ -148,6 +147,15 @@ export const updateCard = createAsyncThunk<
       });
       res.newStep = 5;
       res.newForm = data.data;
+    }
+
+    if (step === 5) {
+      const { data } = await API.update_settings({
+        _id: form._id,
+        enableEnquiryForm: form.enableEnquiryForm,
+      });
+      res.newForm = data.data;
+      window.location.href = "/cards";
     }
 
     return res;

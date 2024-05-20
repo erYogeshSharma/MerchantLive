@@ -2,7 +2,7 @@ import ImageUploadButton from "../shared/ImageUploadButton";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { addLinkOption } from "../../store/business-form/business-form-api";
 import { LoadingButton } from "@mui/lab";
-import DrawerContainer from "../wrappers/DrawerContainer";
+import ModalWrapper from "../wrappers/ModalContainer";
 import React from "react";
 import { Stack, TextField } from "@mui/material";
 
@@ -35,7 +35,7 @@ export default function AddLinkOptionModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addingLinkOption]);
   return (
-    <DrawerContainer
+    <ModalWrapper
       open={open}
       footer={
         <Stack px={2} py={1}>
@@ -72,6 +72,6 @@ export default function AddLinkOptionModal({
           }
         />
       </Stack>
-    </DrawerContainer>
+    </ModalWrapper>
   );
 }

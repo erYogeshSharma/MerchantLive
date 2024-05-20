@@ -86,7 +86,7 @@ export default function DashboardWrapper(props: Props) {
           overflowY: "auto",
           backgroundColor: (theme) => theme.palette.background.default,
           flexGrow: 1,
-          p: { xs: 1, md: 3 },
+          p: { xs: 0, md: 3 },
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >

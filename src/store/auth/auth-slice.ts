@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Tokens, User } from "../types/auth.types";
-import { signIn, signUp } from "./auth-api";
+import { signIn, signUp, updateProfile } from "./auth-api";
 
 type AuthState = {
   user: User;
@@ -9,6 +9,7 @@ type AuthState = {
   //Handle errors here
   error: string;
   isAuthenticating: boolean;
+  updatingProfile: boolean;
 };
 
 const initialState: AuthState = {
@@ -27,6 +28,7 @@ const initialState: AuthState = {
   //
   error: "",
   isAuthenticating: false,
+  updatingProfile: false,
 };
 
 export const authSlice = createSlice({
@@ -67,6 +69,19 @@ export const authSlice = createSlice({
       state.isAuthenticating = false;
       state.user = action.payload.data.user;
       state.tokens = action.payload.data.tokens;
+    });
+
+    //update prolile
+    builder.addCase(updateProfile.pending, (state) => {
+      state.updatingProfile = true;
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      state.updatingProfile = false;
+      state.error = action.payload as string;
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.updatingProfile = false;
+      state.user = { ...state.user, ...action.payload };
     });
   },
 

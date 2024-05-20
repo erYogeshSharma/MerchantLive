@@ -1,44 +1,67 @@
-import CompleteImage from "../../assets/Completed-bro.svg";
-import {
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, Stack } from "@mui/material";
 
 //whatsapp link
 //
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import PhoneMockup from "../shared/PhoneMockup";
+import ThemeSelector from "../shared/ThemeSelector";
+import { update_settings } from "../../api";
+import { updateForm } from "../../store/business-form/business-form-slice";
+import { useState } from "react";
 const Review = () => {
+  const dispatch = useAppDispatch();
+  const [updatingTheme, setUpdatingTheme] = useState(false);
   const { form } = useAppSelector((state) => state.businessForm);
+
+  async function handleTheme(theme: string) {
+    try {
+      setUpdatingTheme(true);
+      await update_settings({
+        _id: form._id,
+        theme,
+      });
+      setTimeout(() => {
+        dispatch(updateForm({ theme }));
+        setUpdatingTheme(false);
+      }, 2000);
+    } catch (error) {
+      setUpdatingTheme(false);
+      console.log(error);
+    }
+  }
   return (
-    <Stack alignItems="center">
-      <Stack width="40%">
-        <img
-          style={{ maxWidth: "100%", maxHeight: "100%" }}
-          src={CompleteImage}
-          alt="form complete"
+    <Stack
+      direction={{ xs: "column-reverse", sm: "row" }}
+      justifyContent="center"
+      spacing={{ xs: 1, md: 3 }}
+    >
+      <PhoneMockup
+        theme={form.theme}
+        src={`https://id.zapminds.com/${form.linkId}`}
+      />
+      <Stack key={form.theme} spacing={2}>
+        <ThemeSelector
+          loading={updatingTheme}
+          value={form.theme}
+          onClick={handleTheme}
         />
-      </Stack>
-      {/* <Typography variant="h6">Completed</Typography>
-      <Typography variant="body2" color="text.secondary">
-        Thank you for submitting your business card
-      </Typography> */}
-      <Stack width="100%">
-        <FormGroup>
-          <Typography variant="h6">Review Settings</Typography>
-          <FormControlLabel
-            checked={form.enableAppointmentForm}
-            control={<Checkbox defaultChecked />}
-            label="Enable Appointment Booking"
-          />
-          <FormControlLabel
-            checked={form.enableEnquiryForm}
-            control={<Checkbox />}
-            label="Enable Enquiry Form"
-          />
-        </FormGroup>
+        <Stack width="100%">
+          <FormGroup>
+            <FormControlLabel
+              checked={form.enableEnquiryForm}
+              control={
+                <Checkbox
+                  onChange={(e) =>
+                    dispatch(
+                      updateForm({ enableEnquiryForm: e.target.checked })
+                    )
+                  }
+                />
+              }
+              label="Enable Enquiry Form"
+            />
+          </FormGroup>
+        </Stack>
       </Stack>
     </Stack>
   );

@@ -47,7 +47,7 @@ const AddLinks = () => {
   }
   useEffect(() => {
     dispatch(getLinkOptions());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -62,7 +62,13 @@ const AddLinks = () => {
               <Skeleton variant="circular" sx={{ height: 50, width: 50 }} />
             </Stack>
           ) : (
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              useFlexGap
+              flexWrap="wrap"
+              spacing={2}
+            >
               {linkOptions.map((link) => (
                 <Stack
                   onClick={() => handleLinkClick(link._id)}

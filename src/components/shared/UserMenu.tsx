@@ -1,12 +1,13 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Stack, Typography } from "@mui/material";
+import { Avatar, Stack, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "../../store/auth/auth-slice";
 import { log_out } from "../../api";
-import Avatar from "react-avatar";
+
+import RandomAvatar from "./RandomAvatar";
 export default function UserMenu() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -46,12 +47,13 @@ export default function UserMenu() {
           <Typography variant="subtitle2" fontWeight={500} color="text.primary">
             {user.name}
           </Typography>
-          <Avatar
-            name={user.name}
-            src={"https://lorem.picsum/200/200"}
-            round
-            size="50px"
-          />
+          {user.profilePicUrl ? (
+            <Avatar src={user.profilePicUrl} sx={{ height: 50, width: 50 }}>
+              {user.name[0].toUpperCase()}
+            </Avatar>
+          ) : (
+            <RandomAvatar size={50} name={user.name} />
+          )}
         </Stack>
       </Stack>
       <Menu

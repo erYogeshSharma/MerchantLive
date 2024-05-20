@@ -8,6 +8,9 @@ import {
   IBusinessForm,
 } from "../../types/business";
 
+/* -------------------------------------------------------------------------- */
+/*                              GET ALL BUSINESS                              */
+/* -------------------------------------------------------------------------- */
 export const getAllBusiness = createAsyncThunk<IBusinessCard[]>(
   "business/get_all",
   async (_, { rejectWithValue }) => {
@@ -22,6 +25,9 @@ export const getAllBusiness = createAsyncThunk<IBusinessCard[]>(
   }
 );
 
+/* -------------------------------------------------------------------------- */
+/*                         GET BUSINESS DETAILS BY ID                         */
+/* -------------------------------------------------------------------------- */
 export const getBusinessById = createAsyncThunk<IBusinessForm, string>(
   "business/get_by_id",
   async (id, { rejectWithValue }) => {
@@ -36,13 +42,9 @@ export const getBusinessById = createAsyncThunk<IBusinessForm, string>(
   }
 );
 
-/**========================================================================
- * *                                GET ALL BUSINESS ENQUIRIES
- *
- *
- *
- *
- *========================================================================**/
+/* -------------------------------------------------------------------------- */
+/*                         GET ALL BUSINESS ENQUIRIES                         */
+/* -------------------------------------------------------------------------- */
 
 export const getAllBusinessEnquiries = createAsyncThunk<
   BusinessEnquiry[],

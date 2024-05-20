@@ -1,6 +1,7 @@
 import axios from "axios";
-import { SignInForm, SignUpForm } from "../store/types/auth.types";
+import { SignInForm, SignUpForm, User } from "../store/types/auth.types";
 import { IBusinessForm } from "../types/business";
+import { toast } from "react-toastify";
 
 type Token = {
   accessToken: string;
@@ -30,6 +31,25 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
+// Add a response interceptor
+API.interceptors.response.use(
+  function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+  },
+  function (error) {
+    if (error.response.data.message === "Invalid Access Token") {
+      toast.error("Session Expired");
+      localStorage.clear();
+      window.location.href = "/";
+    }
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    return Promise.reject(error);
+  }
+);
+
 //AUTH
 export const sign_up = (form: SignUpForm) => API.post("/signup/basic", form);
 export const sign_in = (form: SignInForm) => API.post("/login/basic", form);
@@ -42,6 +62,18 @@ export const reset_password = (data: {
   password: string;
   resetPasswordToken: string;
 }) => API.post(`/forgot-password/reset`, data);
+export const change_password = (data: {
+  oldPassword: string;
+  newPassword: string;
+}) => API.patch(`/change-password`, data);
+
+export const update_user_info = (data: Partial<User>) =>
+  API.patch(`/update-info`, data);
+
+//Feedback
+export const send_feedback = (data: { message: string }) =>
+  API.post("user/feedback", data);
+
 //IMAGE UPLOAD
 export const get_presigned_url = (data: {
   key: string;

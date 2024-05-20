@@ -1,51 +1,70 @@
-import { Box } from "@mui/material";
-import { useEffect } from "react";
-// import ThemeSelector from "../../components/shared/ThemeSelector";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import PageTitle from "../../components/shared/PageTitle";
-import { useParams } from "react-router-dom";
-import { getBusinessById } from "../../store/business/business-api";
-// import { update_settings } from "../../api";
-import PhoneMockup from "../../components/shared/PhoneMockup";
-
+import { Paper, Stack } from "@mui/material";
+import SideBar from "./SideBar";
+import { useSearchParams } from "react-router-dom";
+import Profile from "./Profile";
+import Billing from "./Billing";
+import { Money, Person, Support } from "@mui/icons-material";
+import Feedback from "./Feedback";
+import { useEffect } from "react";
+const nav = [
+  {
+    title: "Profile",
+    value: "profile",
+    icon: Person,
+  },
+  {
+    title: "Billing",
+    value: "billing",
+    icon: Money,
+  },
+  {
+    title: "Feedback",
+    value: "feedback",
+    icon: Support,
+  },
+];
 const Settings = () => {
-  const params = useParams();
-  const dispatch = useAppDispatch();
-  const { businessDetails } = useAppSelector((state) => state.business);
-  const businessId = params.bId;
-  // const [t, setT] = React.useState("light");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get("tab") as string;
+
   useEffect(() => {
-    if (
-      !businessDetails ||
-      (businessDetails && businessDetails._id !== businessId)
-    ) {
-      dispatch(getBusinessById(businessId as string));
+    if (!tab) {
+      searchParams.set("tab", "profile");
+      setSearchParams(searchParams);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // async function changeTheme(theme: string) {
-  //   try {
-  //     const { data } = await update_settings({ theme: theme, _id: businessId });
-  //     setT(theme);
-  //   } catch (error) {}
-  // }
   return (
-    <Box>
+    <div>
       <PageTitle title="Settings" />
-      {/* <Paper>
-        <Grid container spacing={2} p={2}>
-          <Grid item>
-          
-          </Grid>
-          <Grid item>
-            <Stack sx={{ height: "calc(100vh - 220px)", overflowY: "auto" }}>
-              <ThemeSelector onClick={changeTheme} value={"light"} />
+      <Stack
+        width="100%"
+        direction={{ xs: "column", md: "row" }}
+        alignItems={{ xs: "center", md: "flex-start" }}
+        spacing={2}
+      >
+        <Stack width={{ xs: "100%", md: "auto" }}>
+          <SideBar nav={nav} />
+        </Stack>
+        <Stack width={{ xs: "100%", md: "100%" }}>
+          <Paper>
+            <Stack p={2} sx={{ minHeight: "calc(100vh - 200px)" }}>
+              <PageTitle
+                title={nav.find((t) => t.value === tab)?.title as string}
+              ></PageTitle>
+              {
+                {
+                  profile: <Profile />,
+                  billing: <Billing />,
+                  feedback: <Feedback />,
+                }[tab]
+              }
             </Stack>
-          </Grid>
-        </Grid>
-      </Paper> */}
-      <PhoneMockup src="https://id.zapminds.com/saul-goodman" />
-    </Box>
+          </Paper>
+        </Stack>
+      </Stack>
+    </div>
   );
 };
 

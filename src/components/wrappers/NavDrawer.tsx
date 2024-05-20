@@ -15,6 +15,7 @@ import {
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Stack, Typography } from "@mui/material";
+import UpgradeToPro from "../shared/UpgradeToPro";
 
 const navItems = [
   {
@@ -73,24 +74,32 @@ const NavDrawer = ({
         justifyContent="flex-start"
       >
         <Typography variant="h6" color="text.primary" noWrap component="div">
-          Merchant Live
+          React Demo
         </Typography>
       </Stack>
       {/* <Toolbar /> */}
       <Divider />
-      <List>
-        {navItems.map((Item, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton
-              onClick={() => navigate(`/${Item.href}`)}
-              selected={currentPath === Item.href}
-            >
-              <ListItemIcon color="primary">{Item.icon}</ListItemIcon>
-              <ListItemText primary={Item.title} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <Stack
+        sx={{ height: "calc(100vh - 68px)" }}
+        justifyContent="space-between"
+      >
+        <List>
+          {navItems.map((Item, index) => (
+            <ListItem key={index} disablePadding>
+              <ListItemButton
+                onClick={() => navigate(`/${Item.href}`)}
+                selected={currentPath === Item.href}
+              >
+                <ListItemIcon color="primary">{Item.icon}</ListItemIcon>
+                <ListItemText primary={Item.title} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Stack>
+          <UpgradeToPro />
+        </Stack>
+      </Stack>
     </div>
   );
   return (

@@ -25,7 +25,7 @@ export const steps = [
     step: 5,
   },
   {
-    title: "Summary",
+    title: "Style & Submit",
     desc: "Review and submit",
     step: 6,
   },
