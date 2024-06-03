@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Divider,
   LinearProgress,
@@ -18,7 +19,9 @@ import Review from "./Review";
 import AddLinks from "./AddLinks";
 
 const CreateCardForm = () => {
-  const { steps, activeStep } = useAppSelector((state) => state.businessForm);
+  const { steps, activeStep, apiError } = useAppSelector(
+    (state) => state.businessForm
+  );
   const isSmallScreen = useMediaQuery("(max-width: 800px)");
   return (
     <Box>
@@ -62,6 +65,11 @@ const CreateCardForm = () => {
                 5: <Review />,
               }[activeStep]
             }
+            {apiError && (
+              <Stack px={2}>
+                <Alert severity="error"> {apiError} </Alert>
+              </Stack>
+            )}
           </Stack>
           <Stack>
             <Divider />

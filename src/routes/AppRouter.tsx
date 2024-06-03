@@ -18,6 +18,8 @@ import Enquiries from "../pages/enquiries/Enquiries";
 import Analytics from "../pages/analytics/Analytics";
 import Settings from "../pages/settings";
 import ErrorPage from "../pages/static/ErrorPage";
+import Offers from "../pages/offers/Offers";
+import useRefreshToken from "@/hooks/useRefreshToken";
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -31,13 +33,15 @@ const AppRouter = () => {
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Analytics />} />
           <Route path="/analytics" element={<Analytics />} />
-          <Route path="/cards" element={<Cards />} />
+          <Route path="/card" element={<Cards />} />
+          <Route path="/offers" element={<Offers />} />
           <Route path="/enquiries" element={<Enquiries />} />
           <Route path="/enquiries/:bId" element={<Enquiries />} />
-          <Route path="/cards/edit/:id" element={<CreateForm />} />
-          <Route path="/cards/create" element={<CreateForm />} />
+          <Route path="/card/edit" element={<CreateForm />} />
+          {/* <Route path="/cards/create" element={<CreateForm />} /> */}
           <Route path="/settings" element={<Settings />} />
           <Route path="/settings/:bId" element={<Settings />} />
+          <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
@@ -59,7 +63,7 @@ const AuthRoutes = () => {
 };
 const ProtectedRoutes = () => {
   const { accessToken } = useAppSelector((state) => state.auth.tokens);
-
+  useRefreshToken();
   if (!accessToken) {
     return <Navigate to="/login" replace />;
   }

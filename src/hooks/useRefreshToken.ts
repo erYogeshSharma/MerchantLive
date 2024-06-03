@@ -9,7 +9,13 @@ async function refreshToken() {
   );
 
   const { data } = await refresh_token(tokens.refreshToken);
-  console.log(data);
+  localStorage.setItem(
+    "token",
+    JSON.stringify({
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    })
+  );
 }
 const useRefreshToken = () => {
   const location = useLocation();

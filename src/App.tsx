@@ -23,13 +23,18 @@ import ColorModeContext from "./contexts/themeContext";
 
 const persistor = persistStore(store);
 export default function ToggleColorMode() {
-  const [mode, setMode] = React.useState<"light" | "dark">("light");
+  const [mode, setMode] = React.useState<"light" | "dark">(
+    (localStorage.getItem("colorMode") as "dark") || "light"
+  );
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
+        localStorage.setItem("colorMode", mode === "light" ? "dark" : "light");
         setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -48,7 +53,7 @@ export default function ToggleColorMode() {
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <ToastContainer
                 position="top-right"
-                autoClose={5000}
+                autoClose={2000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

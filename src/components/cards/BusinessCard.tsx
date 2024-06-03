@@ -1,4 +1,3 @@
-import { IBusinessCard } from "../../types/business";
 import {
   Avatar,
   Divider,
@@ -15,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { resetForm } from "../../store/business-form/business-form-slice";
 import { useAppDispatch } from "../../store/hooks";
 import ButtonMenu from "../shared/ButtonMenu";
+import { IBusinessCard } from "@/types/business";
 
 const BusinessCard = ({ business }: { business: IBusinessCard }) => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const BusinessCard = ({ business }: { business: IBusinessCard }) => {
 
   function handleEdit() {
     dispatch(resetForm());
-    navigate(`/cards/edit/${business._id}`);
+    navigate(`/card/edit`);
   }
 
   function handleMenu(option: string) {
@@ -39,7 +39,7 @@ const BusinessCard = ({ business }: { business: IBusinessCard }) => {
   }
 
   return (
-    <Grid item xs={12} md={4} lg={4}>
+    <Grid item xs={12} md={6} lg={4}>
       <Paper sx={{ position: "relative" }}>
         <Stack sx={{ position: "absolute", right: 5, top: 5 }}>
           <ButtonMenu

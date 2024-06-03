@@ -92,4 +92,37 @@ export type BusinessEnquiry = {
   contact: number;
   createdAt: string;
   updatedAt: string;
+  isSolved: boolean;
+};
+
+export type Offer = {
+  _id?: string;
+  title: string;
+  description: string;
+  image: string;
+  business: string;
+  startsOn: string;
+  endsOn: string;
+  createdAt?: string;
+  updatedAt?: string;
+  isActive: boolean;
+};
+
+export type Visit = {
+  ip: string;
+  userAgent: string;
+  url: string;
+  visitedOn: string;
+};
+
+export type Query = {
+  startDate: string;
+  endDate: string;
+  business: string;
+};
+
+export type GraphData = {
+  x: number;
+  y: number;
+  label: string;
 };

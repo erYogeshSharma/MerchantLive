@@ -1,7 +1,9 @@
 import axios from "axios";
 import { SignInForm, SignUpForm, User } from "../store/types/auth.types";
-import { IBusinessForm } from "../types/business";
+import { IBusinessForm, Query } from "../types/business";
 import { toast } from "react-toastify";
+
+import { Offer } from "@/types/business";
 
 type Token = {
   accessToken: string;
@@ -9,8 +11,8 @@ type Token = {
 };
 
 const API = axios.create({
-  baseURL: "https://mapi.zapminds.com/",
-  // baseURL: "http://localhost:8080",
+  // baseURL: "https://mapi.zapminds.com/",
+  baseURL: "http://localhost:8080",
   // baseURL: "https://9b37-2406-7400-98-df77-61dd-533e-fa3d-9f42.ngrok-free.app/",
 });
 
@@ -50,41 +52,46 @@ API.interceptors.response.use(
   }
 );
 
-//AUTH
-export const sign_up = (form: SignUpForm) => API.post("/signup/basic", form);
-export const sign_in = (form: SignInForm) => API.post("/login/basic", form);
-export const log_out = () => API.delete("/logout");
+/* -------------------------------------------------------------------------- */
+/*                                 AUTH ROUTES                                */
+/* -------------------------------------------------------------------------- */
+export const sign_up = (form: SignUpForm) => API.post("/auth/register", form);
+export const sign_in = (form: SignInForm) => API.post("/auth/login", form);
+export const log_out = () => API.delete("/auth");
 export const refresh_token = (refreshToken: string) =>
-  API.post("/token/refresh", { refreshToken });
+  API.post("/auth/refresh-token", { refreshToken });
+
 export const forgot_password = (email: string) =>
-  API.post("/forgot-password", { email });
+  API.post("/auth/password/forgot", { email });
 export const reset_password = (data: {
   password: string;
   resetPasswordToken: string;
-}) => API.post(`/forgot-password/reset`, data);
+}) => API.post(`/auth/password/reset`, data);
+
+/* -------------------------------------------------------------------------- */
+/*                               USER ENDPOINTS                               */
+/* -------------------------------------------------------------------------- */
 export const change_password = (data: {
   oldPassword: string;
   newPassword: string;
-}) => API.patch(`/change-password`, data);
-
+}) => API.patch(`/user/password`, data);
 export const update_user_info = (data: Partial<User>) =>
-  API.patch(`/update-info`, data);
-
-//Feedback
+  API.patch(`/user/profile`, data);
 export const send_feedback = (data: { message: string }) =>
   API.post("user/feedback", data);
 
-//IMAGE UPLOAD
+/* -------------------------------------------------------------------------- */
+/*                                  BUSINESS                                  */
+/* -------------------------------------------------------------------------- */
+export const get_linkId_availability = (linkId: string) =>
+  API.post("business/id-availability", { linkId });
+
 export const get_presigned_url = (data: {
   key: string;
   content_type: string;
 }) => API.post("/media/signed-url", data);
-
-//BUSINESS
-export const get_linkId_availability = (linkId: string) =>
-  API.post("business/id-availability", { linkId });
 export const get_all_business = () => API.get("/business/all");
-export const get_business = (id: string) => API.get(`/business/details/${id}`);
+export const get_business = () => API.get(`/business/details/`);
 
 export const create_business = (form: Partial<IBusinessForm>) =>
   API.post("/business/create", form);
@@ -103,10 +110,28 @@ export const update_settings = (form: Partial<IBusinessForm>) =>
   API.patch(`/business/update-settings`, form);
 export const update_calender = (form: Partial<IBusinessForm>) =>
   API.patch(`/business/update-calender`, form);
+
+export const get_business_enquiries = () => API.get(`/business/enquiry`);
+export const update_enquiry_status = (enquiryId: string, isSolved: boolean) =>
+  API.patch(`/business/enquiry/status/${enquiryId}`, { isSolved });
 //LINKS
 export const get_links = () => API.get("/business/links");
 export const add_link = (link: { title: string; icon: string }) =>
-  API.post("/business/link", link);
+  API.post("/business/links", link);
 
-export const get_business_enquiries = (businessId: string) =>
-  API.get(`/enquiry/get/${businessId}`);
+export const get_visits = (query: Query) =>
+  API.get(
+    `/business/visits/${query.business}/?startDate=${query.startDate}&endDate=${query.endDate}`
+  );
+
+/* -------------------------------------------------------------------------- */
+/*                                   OFFERS                                   */
+/* -------------------------------------------------------------------------- */
+
+export const get_offers = () => API.get(`/business/offer/`);
+export const create_offer = (offer: Partial<Offer>) =>
+  API.post(`/business/offer`, offer);
+export const update_offer = (offer: Partial<Offer>) =>
+  API.patch(`/business/offer/${offer._id}`, offer);
+export const delete_offer = (offerId: string) =>
+  API.delete(`/business/offer/${offerId}`);

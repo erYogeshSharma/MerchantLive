@@ -10,6 +10,9 @@ import NavDrawer from "./NavDrawer";
 import ToggleTheme from "../shared/ToggleTheme";
 import { Container, Divider, Stack } from "@mui/material";
 import UserMenu from "../shared/UserMenu";
+import Notifications from "../app/Notifications";
+import OnboardModal from "../popups/OnboardModal";
+import useLoadBusiness from "@/hooks/getBusinessId";
 
 const drawerWidth = 240;
 
@@ -25,12 +28,16 @@ interface Props {
 export default function DashboardWrapper(props: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const business = useLoadBusiness();
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
       setMobileOpen(!mobileOpen);
+      console.log(business);
     }
   };
+
+  //Handle User
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -67,6 +74,7 @@ export default function DashboardWrapper(props: Props) {
             <Stack direction="row" alignItems="center" spacing={2}>
               <ToggleTheme />
               <UserMenu />
+              <Notifications />
             </Stack>
           </Stack>
         </Toolbar>
@@ -91,7 +99,10 @@ export default function DashboardWrapper(props: Props) {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg">{props.children}</Container>
+        <Container maxWidth="lg">
+          <OnboardModal />
+          {props.children}
+        </Container>
       </Box>
     </Box>
   );

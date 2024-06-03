@@ -37,6 +37,7 @@ export const authSlice = createSlice({
   reducers: {
     clearErrors: (state) => {
       state.error = "";
+      state.isAuthenticating = false;
     },
     signOut: (state) => {
       state.user = initialState.user;

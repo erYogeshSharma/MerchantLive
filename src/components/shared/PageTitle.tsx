@@ -4,9 +4,11 @@ import { ReactNode } from "react";
 const PageTitle = ({
   title,
   children,
+  desc,
 }: {
   title: string;
   children?: ReactNode;
+  desc?: string;
 }) => {
   return (
     <Stack
@@ -16,9 +18,12 @@ const PageTitle = ({
       alignItems="center"
       justifyContent="space-between"
     >
-      <Typography variant="h5" fontWeight={600}>
-        {title}
-      </Typography>
+      <Stack>
+        <Typography variant="h5" fontWeight={600}>
+          {title}
+        </Typography>
+        <Typography variant="caption">{desc}</Typography>
+      </Stack>
       {children}
     </Stack>
   );

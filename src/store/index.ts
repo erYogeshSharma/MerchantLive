@@ -4,17 +4,22 @@ import { persistReducer } from "redux-persist";
 import authSlice from "./auth/auth-slice";
 import cardFormSlice from "./business-form/business-form-slice";
 import businessSlice from "./business/business-slice";
+import appSlice from "./app/app-slice";
+import analyticsSlice from "./analytics/analytics.slice";
 
 const reducers = combineReducers({
+  app: appSlice,
   auth: authSlice,
+
   businessForm: cardFormSlice,
   business: businessSlice,
+  analytics: analyticsSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "app"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

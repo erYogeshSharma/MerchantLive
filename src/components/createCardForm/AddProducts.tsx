@@ -1,10 +1,9 @@
-import { Delete, Edit } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 import {
   Button,
   Divider,
   IconButton,
   Paper,
-  Popover,
   Stack,
   TextField,
   Typography,
@@ -17,6 +16,7 @@ import { updateForm } from "../../store/business-form/business-form-slice";
 import { LoadingButton } from "@mui/lab";
 import ImageUploadButton from "../shared/ImageUploadButton";
 import ModalContainer from "../wrappers/ModalContainer";
+import DeleteConfirmModal from "../shared/DeleteConfrmButton";
 
 const ProductCard = ({
   product,
@@ -72,73 +72,13 @@ const ProductCard = ({
           </Typography>
         </Stack>
         <Stack direction="row" alignItems="center">
-          <DeleteButton handleDelete={handleProductDelete} />
+          <DeleteConfirmModal handleDelete={handleProductDelete} />
           <IconButton onClick={() => handleEdit(product)}>
             <Edit />
           </IconButton>
         </Stack>
       </Stack>
     </Paper>
-  );
-};
-
-const DeleteButton = ({
-  loading,
-  handleDelete,
-}: {
-  loading?: boolean;
-  handleDelete: () => void;
-}) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-  return (
-    <div>
-      <IconButton
-        size="small"
-        color="error"
-        aria-describedby={id}
-        onClick={handleClick}
-      >
-        <Delete />
-      </IconButton>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-      >
-        <Stack width={300} px={2} py={1}>
-          <Typography sx={{ p: 2 }}>Are you sure</Typography>
-          <Stack direction="row" justifyContent="flex-end" spacing={2}>
-            <Button onClick={handleClose} variant="outlined" size="small">
-              Cancel
-            </Button>
-            <LoadingButton
-              onClick={handleDelete}
-              loading={loading}
-              variant="contained"
-              size="small"
-            >
-              Yes
-            </LoadingButton>
-          </Stack>
-        </Stack>
-      </Popover>
-    </div>
   );
 };
 
@@ -234,6 +174,7 @@ const AddProducts = () => {
             minRows={3}
             maxRows={5}
             label="Description"
+            inputProps={{ maxLength: 150 }}
             size="small"
             value={newProductForm.description}
             onChange={(e) =>
@@ -242,6 +183,7 @@ const AddProducts = () => {
                 description: e.target.value,
               }))
             }
+            helperText={`${newProductForm.description.length}/150`}
           />
         </Stack>
       </ModalContainer>

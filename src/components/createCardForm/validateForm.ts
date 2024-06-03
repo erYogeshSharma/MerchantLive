@@ -32,6 +32,46 @@ export function validateForm(step: number, form: IBusinessForm) {
         isValid = false;
         errors["phone"] = "Phone is required";
       }
+
+      if (!form.logo) {
+        isValid = false;
+        errors["logo"] = "Logo is required";
+      }
+
+      if (!form.coverImage) {
+        isValid = false;
+        errors["coverImage"] = "Cover Image is required";
+      }
+      break;
+    case 1:
+      if (!form.address) {
+        isValid = false;
+        errors["address"] = "Address is required";
+      }
+      if (!form.city) {
+        isValid = false;
+        errors["city"] = "City is required";
+      }
+      if (!form.state) {
+        isValid = false;
+        errors["state"] = "State is required";
+      }
+      if (!form.zipCode) {
+        isValid = false;
+        errors["zipCode"] = "Zip is required";
+      }
+      if (!form.country) {
+        isValid = false;
+        errors["country"] = "Country is required";
+      }
+      if (
+        form.googleMapLink &&
+        !form.googleMapLink.match(/^(http(s)?:\/\/)?([^\s]+)\.[^\s]+/g)
+      ) {
+        isValid = false;
+        errors["googleMapLink"] = "Invalid URL";
+      }
+
       break;
     default:
       return { isValid, errors };

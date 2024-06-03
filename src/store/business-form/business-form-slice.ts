@@ -97,13 +97,14 @@ export const cardFormSlice = createSlice({
     });
     builder.addCase(createCard.fulfilled, (state, action) => {
       state.saving = false;
-      state.activeStep = 1;
-      state.completedSteps.push(0);
+      state.activeStep = 0;
+
       state.form = action.payload;
     });
 
     //Update
     builder.addCase(updateCard.pending, (state) => {
+      state.apiError = "";
       state.saving = true;
     });
     builder.addCase(updateCard.rejected, (state, action) => {

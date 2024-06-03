@@ -109,6 +109,7 @@ export default function SignIn() {
               {!isSignUp && (
                 <Stack alignItems="flex-end">
                   <Link
+                    component="button"
                     onClick={() => navigate("/forgot-password")}
                     variant="body2"
                   >
@@ -119,8 +120,8 @@ export default function SignIn() {
             </Stack>
             <Stack direction="row" alignItems="center">
               <Checkbox />
-              <Typography variant="body2">
-                I agree to <Link>Term and conditions</Link>{" "}
+              <Typography variant="caption">
+                I agree to <Link component="button">Term and conditions</Link>{" "}
               </Typography>
             </Stack>
             {/* <FormControlLabel
@@ -138,22 +139,23 @@ export default function SignIn() {
               {isSignUp ? "Sign up" : "Sign in"}
             </LoadingButton>
             {error && <Alert severity="error">{error.toString()}</Alert>}
-            <Grid container>
-              <Grid item>
-                <Typography variant="body2">
-                  {isSignUp
-                    ? "Already have an account?"
-                    : "Don't have an account?"}
-                  <Link
-                    onClick={() => navigate(isSignUp ? "/login" : "/register")}
-                  >
-                    &nbsp;
-                    {isSignUp ? "Sign in" : "Sign up"}
-                  </Link>
-                </Typography>
-              </Grid>
-            </Grid>
           </Stack>
+          <Grid container>
+            <Grid item>
+              <Typography variant="caption">
+                {isSignUp
+                  ? "Already have an account?"
+                  : "Don't have an account?"}
+                <Link
+                  component="button"
+                  onClick={() => navigate(isSignUp ? "/login" : "/register")}
+                >
+                  &nbsp;
+                  {isSignUp ? "Sign in" : "Sign up"}
+                </Link>
+              </Typography>
+            </Grid>
+          </Grid>
         </Stack>
       </Paper>
     </Container>

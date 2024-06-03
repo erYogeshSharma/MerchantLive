@@ -10,6 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import {
   Analytics,
   CardTravelSharp,
+  Discount,
   Feedback,
   Settings,
 } from "@mui/icons-material";
@@ -24,9 +25,14 @@ const navItems = [
     href: "analytics",
   },
   {
-    title: "Cards",
+    title: "Card",
     icon: <CardTravelSharp />,
-    href: "cards",
+    href: "card",
+  },
+  {
+    title: "Offers",
+    icon: <Discount />,
+    href: "offers",
   },
   {
     title: "Enquiries",

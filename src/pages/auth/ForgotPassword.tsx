@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Paper } from "@mui/material";
+import { Alert, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { forgot_password } from "../../api";
 import axios from "axios";
@@ -103,9 +103,7 @@ export default function ForgotPassword() {
             >
               Send Email
             </LoadingButton>
-            <Typography variant="body2" color="error">
-              {message}
-            </Typography>
+            <Alert severity="success">{message}</Alert>
           </Box>
         </Box>
       </Paper>

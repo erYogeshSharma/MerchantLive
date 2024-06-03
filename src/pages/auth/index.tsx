@@ -1,17 +1,22 @@
 import SignIn from "./Auth";
-import { Grid, Stack, Typography } from "@mui/material";
-import image from "../../assets/auth.svg";
-import ToggleTheme from "../../components/shared/ToggleTheme";
+import { Grid, Stack } from "@mui/material";
+// import image from "../../assets/auth.svg";
+// import ToggleTheme from "../../components/shared/ToggleTheme";
 const AuthPage = () => {
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={5} lg={7}>
-        <Stack height="100vh" alignItems="center" justifyContent="center">
-          <SignIn />
-        </Stack>
-      </Grid>
+      {/* <Grid item xs={12} md={5} lg={7}> */}
+      <Stack
+        width="100vw"
+        height="100vh"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <SignIn />
+      </Stack>
+      {/* </Grid> */}
 
-      <Grid
+      {/* <Grid
         item
         xs={0}
         md={7}
@@ -41,7 +46,7 @@ const AuthPage = () => {
             </Stack>
           </Stack>
         </Stack>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

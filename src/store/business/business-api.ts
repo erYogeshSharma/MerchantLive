@@ -6,7 +6,9 @@ import {
   BusinessEnquiry,
   IBusinessCard,
   IBusinessForm,
-} from "../../types/business";
+  Offer,
+} from "@/types/business";
+import { toast } from "react-toastify";
 
 /* -------------------------------------------------------------------------- */
 /*                              GET ALL BUSINESS                              */
@@ -28,11 +30,11 @@ export const getAllBusiness = createAsyncThunk<IBusinessCard[]>(
 /* -------------------------------------------------------------------------- */
 /*                         GET BUSINESS DETAILS BY ID                         */
 /* -------------------------------------------------------------------------- */
-export const getBusinessById = createAsyncThunk<IBusinessForm, string>(
+export const getBusinessDetails = createAsyncThunk<IBusinessForm, void>(
   "business/get_by_id",
-  async (id, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const { data } = await API.get_business(id);
+      const { data } = await API.get_business();
       return data.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -48,10 +50,10 @@ export const getBusinessById = createAsyncThunk<IBusinessForm, string>(
 
 export const getAllBusinessEnquiries = createAsyncThunk<
   BusinessEnquiry[],
-  string
->("business/get_all_enquiries", async (id, { rejectWithValue }) => {
+  void
+>("business/get_all_enquiries", async (_, { rejectWithValue }) => {
   try {
-    const { data } = await API.get_business_enquiries(id);
+    const { data } = await API.get_business_enquiries();
     return data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -59,3 +61,59 @@ export const getAllBusinessEnquiries = createAsyncThunk<
     }
   }
 });
+
+/* -------------------------------------------------------------------------- */
+/*                         GET ALL BUSINESS OFFERS                         */
+/* -------------------------------------------------------------------------- */
+
+export const getAllBusinessOffers = createAsyncThunk<Offer[], void>(
+  "business/get_all_offers",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await API.get_offers();
+      return data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error?.response?.data?.message);
+      }
+    }
+  }
+);
+
+/* -------------------------------------------------------------------------- */
+/*                         CREATE A BUSINESS OFFERS                         */
+/* -------------------------------------------------------------------------- */
+
+export const createBusinessOffer = createAsyncThunk<Offer, Partial<Offer>>(
+  "business/create_offer",
+  async (form, { rejectWithValue }) => {
+    try {
+      const { data } = await API.create_offer(form);
+      toast.success("Offer created successfully");
+      return data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error?.response?.data?.message);
+      }
+    }
+  }
+);
+
+/* -------------------------------------------------------------------------- */
+/*                         UPDATE A BUSINESS OFFERS                         */
+/* -------------------------------------------------------------------------- */
+
+export const updateBusinessOffer = createAsyncThunk<Offer, Partial<Offer>>(
+  "business/update_offer",
+  async (form, { rejectWithValue }) => {
+    try {
+      const { data } = await API.update_offer(form);
+      toast.success("Offer updated successfully");
+      return data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(error?.response?.data?.message);
+      }
+    }
+  }
+);

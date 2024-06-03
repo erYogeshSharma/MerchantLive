@@ -2,6 +2,7 @@ import * as API from "../../api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IBusinessForm, ILinkOption } from "../../types/business";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 /* -------------------------------------------------------------------------- */
 /*                            CREATE BUSINESS CARD                            */
@@ -14,15 +15,10 @@ export const createCard = createAsyncThunk<
     const { data } = await API.create_business({
       linkId: form.linkId,
       logo: form.logo,
-      coverImage: form.coverImage,
       name: form.name,
-      title: form.title,
-      email: form.email,
-      phone: form.phone,
-      alternatePhone: form.alternatePhone,
-      description: form.description,
       category: form.category,
     });
+    toast.success("Card Created Successfully");
     return data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -5,6 +5,7 @@ import {
   Select,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { updateForm } from "../../store/business-form/business-form-slice";
@@ -23,21 +24,30 @@ const BasicDetails = () => {
   const imageUploaded = (key: string, url: string) => {
     dispatch(updateForm({ [key]: url }));
   };
+
   return (
     <Stack spacing={2}>
-      <Stack direction={{ xs: "row" }} alignItems="baseline" spacing={2}>
-        <ImageUploadButton
-          name="logo"
-          image={form.logo}
-          label="Select Logo"
-          onChange={(url) => imageUploaded("logo", url)}
-        />
-        <ImageUploadButton
-          name="coverImage"
-          image={form.coverImage}
-          label="Select Cover Image"
-          onChange={(url) => imageUploaded("coverImage", url)}
-        />
+      <Stack>
+        <Stack direction={{ xs: "row" }} alignItems="baseline" spacing={2}>
+          <ImageUploadButton
+            name="logo"
+            image={form.logo}
+            label="Select Logo"
+            onChange={(url) => imageUploaded("logo", url)}
+          />
+          <ImageUploadButton
+            name="coverImage"
+            image={form.coverImage}
+            label="Select Cover Image"
+            onChange={(url) => imageUploaded("coverImage", url)}
+          />
+        </Stack>
+        <Typography color="error" variant="caption">
+          {errors.coverImage}
+        </Typography>
+        <Typography color="error" variant="caption">
+          {errors.logo}
+        </Typography>
       </Stack>
       <TextField
         size="small"
