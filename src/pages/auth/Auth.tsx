@@ -110,6 +110,7 @@ export default function SignIn() {
                 <Stack alignItems="flex-end">
                   <Link
                     component="button"
+                    type="button"
                     onClick={() => navigate("/forgot-password")}
                     variant="body2"
                   >
@@ -121,7 +122,10 @@ export default function SignIn() {
             <Stack direction="row" alignItems="center">
               <Checkbox />
               <Typography variant="caption">
-                I agree to <Link component="button">Term and conditions</Link>{" "}
+                I agree to{" "}
+                <Link type="button" component="button">
+                  Term and conditions
+                </Link>{" "}
               </Typography>
             </Stack>
             {/* <FormControlLabel
