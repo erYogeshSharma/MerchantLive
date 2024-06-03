@@ -23,14 +23,15 @@ const useRefreshToken = () => {
     localStorage.getItem("token") || "{}"
   );
 
-  const decoded: { exp: number } = jwtDecode(tokens.accessToken);
-  const now = new Date().getTime();
-
-  const isExpired = now > decoded.exp * 1000;
-
   useEffect(() => {
-    if (isExpired) {
-      refreshToken();
+    if (tokens.accessToken) {
+      const decoded: { exp: number } = jwtDecode(tokens.accessToken);
+      const now = new Date().getTime();
+
+      const isExpired = now > decoded.exp * 1000;
+      if (isExpired) {
+        refreshToken();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
