@@ -1,5 +1,5 @@
 import { Color, darkScrollbar } from "@mui/material";
-import { amber, green, grey, red } from "@mui/material/colors";
+import { amber, deepOrange, green, grey, red } from "@mui/material/colors";
 import { ThemeOptions } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
@@ -54,7 +54,7 @@ declare module "@mui/material/Typography" {
 
 type mode = "light" | "dark";
 
-const primary = green;
+const primary = deepOrange;
 const secondary = amber;
 
 function getIconColors(color: Color, mode: mode) {

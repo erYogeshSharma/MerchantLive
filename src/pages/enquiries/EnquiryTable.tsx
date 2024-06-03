@@ -1,5 +1,6 @@
 import {
   Chip,
+  IconButton,
   Paper,
   Stack,
   Table,
@@ -11,7 +12,13 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Done, EmailOutlined, Pending, Phone } from "@mui/icons-material";
+import {
+  Done,
+  EmailOutlined,
+  Pending,
+  Phone,
+  WhatsApp,
+} from "@mui/icons-material";
 import RandomAvatar from "../../components/shared/RandomAvatar";
 import moment from "moment";
 import CopyButton from "../../components/shared/CopyButton";
@@ -95,6 +102,14 @@ const EnquiryTable = ({ enquiries }: Props) => {
                       <Typography variant="caption" color="text.secondary">
                         {enquiry.contact}
                       </Typography>
+                      <Tooltip title="Message on whatsapp">
+                        <IconButton
+                          target="_blank"
+                          href={`https://wa.me/${enquiry.contact}`}
+                        >
+                          <WhatsApp sx={{ color: "#25D366" }} />
+                        </IconButton>
+                      </Tooltip>
                       <CopyButton text={enquiry.contact} />
                     </Stack>
                   </Stack>
