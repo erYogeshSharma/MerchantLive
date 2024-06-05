@@ -5,6 +5,7 @@ import { getAllBusiness } from "../../store/business/business-api";
 import BusinessCard from "../../components/cards/BusinessCard";
 import PageTitle from "../../components/shared/PageTitle";
 import NoCard from "../../components/templates/NoCard";
+import VisitingCard from "@/components/visitingCards";
 
 export default function DataTable() {
   const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ export default function DataTable() {
       }}
     >
       <PageTitle title="Business Card"></PageTitle>
-      {!cards && loadingCards && <LinearProgress />}
+      {loadingCards && <LinearProgress />}
 
       <Stack>
         {cards.length ? (
@@ -36,6 +37,13 @@ export default function DataTable() {
           <NoCard />
         )}
       </Stack>
+      {/* <Stack mt={2}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={4}>
+            <VisitingCard card={cards[0]} />
+          </Grid>
+        </Grid>
+      </Stack> */}
     </div>
   );
 }

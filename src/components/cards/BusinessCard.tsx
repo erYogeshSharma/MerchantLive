@@ -73,7 +73,7 @@ const BusinessCard = ({ business }: { business: IBusinessCard }) => {
           </Stack>
         </Stack>
         <Divider />
-        <Stack py={1} direction="row" justifyContent="space-between">
+        {/* <Stack py={1} direction="row" justifyContent="space-between">
           <Stack width="50%" alignItems="center">
             <Typography fontWeight={600} variant="h5">
               50
@@ -90,7 +90,7 @@ const BusinessCard = ({ business }: { business: IBusinessCard }) => {
               Visits
             </Typography>
           </Stack>
-        </Stack>
+        </Stack> */}
       </Paper>
     </Grid>
   );

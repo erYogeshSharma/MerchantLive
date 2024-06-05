@@ -57,6 +57,8 @@ const AddSchedule = () => {
     );
   }
 
+  console.log(form.calender, "form.calender");
+
   function toggleIsActive(day: string) {
     const [isActive, start, end] = JSON.parse(form.calender)[day].split("-");
     dispatch(

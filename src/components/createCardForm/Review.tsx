@@ -61,6 +61,21 @@ const Review = () => {
               label="Enable Enquiry Form"
             />
           </FormGroup>
+          <FormGroup>
+            <FormControlLabel
+              checked={form.enableAppointmentForm}
+              control={
+                <Checkbox
+                  onChange={(e) =>
+                    dispatch(
+                      updateForm({ enableAppointmentForm: e.target.checked })
+                    )
+                  }
+                />
+              }
+              label="Show business hours"
+            />
+          </FormGroup>
         </Stack>
       </Stack>
     </Stack>

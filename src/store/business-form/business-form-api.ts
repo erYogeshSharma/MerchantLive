@@ -149,9 +149,10 @@ export const updateCard = createAsyncThunk<
       const { data } = await API.update_settings({
         _id: form._id,
         enableEnquiryForm: form.enableEnquiryForm,
+        enableAppointmentForm: form.enableAppointmentForm,
       });
       res.newForm = data.data;
-      window.location.href = "/cards";
+      window.location.href = "/card";
     }
 
     return res;
