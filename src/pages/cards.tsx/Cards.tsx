@@ -5,7 +5,6 @@ import { getAllBusiness } from "../../store/business/business-api";
 import BusinessCard from "../../components/cards/BusinessCard";
 import PageTitle from "../../components/shared/PageTitle";
 import NoCard from "../../components/templates/NoCard";
-import VisitingCard from "@/components/visitingCards";
 
 export default function DataTable() {
   const dispatch = useAppDispatch();
