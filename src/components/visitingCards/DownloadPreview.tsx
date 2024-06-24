@@ -25,29 +25,17 @@ const style = {
   bgcolor: "background.paper",
   borderRadius: 2,
   boxShadow: 24,
-
   p: 2,
 };
 
-const DownloadPreview = () => {
-  const dispatch = useAppDispatch();
-
-  const { card, cardId, open } = useAppSelector(
-    (state) => state.app.previewCard
-  );
-  function handleClose() {
-    dispatch(closePreviewCard());
-  }
-
-  const { Front, Back } = Cards(cardId);
-  const c = [Front, Back];
-
+const Card = ({ side }: { side: "Front" | "Back" }) => {
   const myRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const { card, cardId } = useAppSelector((state) => state.app.previewCard);
 
+  const { Front, Back } = Cards(cardId);
   useEffect(() => {
     const element = myRef.current;
-
     if (element) {
       const resizeObserver = new ResizeObserver((entries) => {
         const { width, height } = entries[0].contentRect;
@@ -59,6 +47,37 @@ const DownloadPreview = () => {
       return () => resizeObserver.disconnect();
     }
   }, [myRef]);
+
+  return (
+    <Grid item xs={12} md={6}>
+      <Stack
+        sx={{
+          aspectRatio: 1.75,
+          borderRadius: 2.5,
+          background: (theme) => theme.palette.background.default,
+        }}
+        ref={myRef}
+        className="card-container"
+      >
+        {side === "Front" ? (
+          <Front card={card} dimensions={dimensions} />
+        ) : (
+          <Back card={card} dimensions={dimensions} />
+        )}
+      </Stack>
+    </Grid>
+  );
+};
+
+const DownloadPreview = () => {
+  const dispatch = useAppDispatch();
+
+  function handleClose() {
+    dispatch(closePreviewCard());
+  }
+  const { card, open } = useAppSelector((state) => state.app.previewCard);
+
+  const c = ["Front", "Back"];
 
   function handleDownload() {
     htmlToImage
@@ -112,21 +131,9 @@ const DownloadPreview = () => {
             className="card-preview"
             id="card-preview"
           >
-            {c.map((C) => (
-              <Grid item xs={12} md={6}>
-                <Stack
-                  sx={{
-                    aspectRatio: 1.75,
-                    borderRadius: 2.5,
-                    background: (theme) => theme.palette.background.default,
-                  }}
-                  ref={myRef}
-                  className="card-container"
-                >
-                  <div className="card-front">
-                    <C card={card} dimensions={dimensions} />
-                  </div>
-                </Stack>
+            {c.map((C, i) => (
+              <Grid item xs={12} md={6} key={i}>
+                <Card side={C as "Front" | "Back"} />
               </Grid>
             ))}
           </Grid>
