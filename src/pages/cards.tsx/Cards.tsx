@@ -12,7 +12,7 @@ import DownloadPreview from "@/components/visitingCards/DownloadPreview";
 export default function DataTable() {
   const dispatch = useAppDispatch();
   const { cards, loadingCards } = useAppSelector((state) => state.business);
-
+  const preview = useAppSelector((state) => state.app.previewCard);
   React.useEffect(() => {
     dispatch(getAllBusiness());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,7 +50,7 @@ export default function DataTable() {
         </Stack>
         {cards.length && (
           <Stack>
-            <DownloadPreview />
+            {preview?.open && <DownloadPreview />}
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6} md={4}>
                 <VisitingCard id={1} card={cards[0]} />
