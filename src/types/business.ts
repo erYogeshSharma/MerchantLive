@@ -40,6 +40,10 @@ export type IBusinessCard = {
   coverImage: string;
   linkId: string;
   isActive: boolean;
+  alternatePhone: number;
+  address: string;
+  email: string;
+  phone: number;
 };
 export type IBusinessForm = {
   //BASIC INFO (active step-1)

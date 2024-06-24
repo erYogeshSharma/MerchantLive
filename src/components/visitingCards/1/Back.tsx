@@ -1,12 +1,14 @@
 import React from "react";
-import { CardData, Dimensions } from "./Front";
+import { Dimensions } from "./Front";
 import { Stack } from "@mui/material";
 import BackImage from "./cardOneBack.svg";
 import CardText from "../CardText";
+import { IBusinessCard } from "@/types/business";
+import { getWidth } from "../util";
 const CardOneBack = (
   props: React.PropsWithChildren<{
     dimensions: Dimensions;
-    card: CardData;
+    card: IBusinessCard;
   }>
 ) => {
   return (
@@ -21,6 +23,12 @@ const CardOneBack = (
       }}
     >
       <Stack textAlign="center">
+        <Stack alignItems="center">
+          <img
+            src={props.card.logo}
+            style={{ height: getWidth(40, props.dimensions) }}
+          />
+        </Stack>
         <CardText
           size={16}
           color="#fff"
@@ -30,7 +38,7 @@ const CardOneBack = (
           {props.card.name}
         </CardText>
         <CardText size={10} color="#fff" dimensions={props.dimensions}>
-          {props.card.tagLine}
+          {props.card.title}
         </CardText>
       </Stack>
       <Stack

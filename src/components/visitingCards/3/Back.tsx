@@ -1,11 +1,11 @@
 import React from "react";
 import { Dimensions } from "./Front";
 import { Stack } from "@mui/material";
-import cardTwoBackShape from "./cardTwoBackShape.svg";
 import CardText from "../CardText";
+
 import { IBusinessCard } from "@/types/business";
 import { getWidth } from "../util";
-const CardTwoBack = (
+const CardThreeBack = (
   props: React.PropsWithChildren<{
     dimensions: Dimensions;
     card: IBusinessCard;
@@ -16,7 +16,7 @@ const CardTwoBack = (
       alignItems="center"
       justifyContent="center"
       sx={{
-        background: "#141717",
+        background: "#1C2F56",
         height: "100%",
         position: "relative",
         borderRadius: 2.5,
@@ -31,32 +31,18 @@ const CardTwoBack = (
         </Stack>
         <CardText
           size={16}
-          color="#fff"
+          color="#DEC364"
           weight={700}
           dimensions={props.dimensions}
         >
           {props.card.name}
         </CardText>
-        <CardText size={10} color="#fff" dimensions={props.dimensions}>
+        <CardText size={10} color="#DEC364" dimensions={props.dimensions}>
           {props.card.title}
         </CardText>
-      </Stack>
-      <Stack
-        sx={{
-          position: "absolute",
-          bottom: 0,
-          width: "100%",
-          left: 0,
-          right: 0,
-        }}
-      >
-        <img
-          src={cardTwoBackShape}
-          style={{ borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
-        />
       </Stack>
     </Stack>
   );
 };
 
-export default CardTwoBack;
+export default CardThreeBack;

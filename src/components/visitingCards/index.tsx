@@ -4,18 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import "./tansition.css";
 import { IBusinessCard } from "@/types/business.ts";
 import Cards from "./cards.tsx";
-const cardData = {
-  name: "John Doe",
-  title: "Designer",
-  phone: "+91 9876543210",
-  email: "er.yogesh505#gmail.com",
-  address: "22 St. Street, Bangalore, 560068",
-  logo: "https://www.flaticon.com/svg/vstatic/svg/3135/3135715.svg?token=exp=1635763664~hmac=",
-  background: "#fff",
-  tagLine: "Designing the future",
-  link: "https://id.zapminds.com/123456",
-};
-const VisitingCard = ({ id = 1 }: { card?: IBusinessCard; id: number }) => {
+import { useAppDispatch } from "@/store/hooks.ts";
+import { openPreviewCard } from "@/store/app/app-slice.ts";
+
+const VisitingCard = ({
+  id = 1,
+  card,
+}: {
+  card: IBusinessCard;
+  id: number;
+}) => {
+  const dispatch = useAppDispatch();
   const myRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
@@ -38,23 +37,37 @@ const VisitingCard = ({ id = 1 }: { card?: IBusinessCard; id: number }) => {
 
   const Card = Cards(id);
 
+  function handleOpenCard() {
+    dispatch(
+      openPreviewCard({
+        open: true,
+        card: card,
+        cardId: id,
+      })
+    );
+  }
   return (
     <Stack
-      sx={{ aspectRatio: 1.75, borderRadius: 2.5 }}
+      sx={{
+        aspectRatio: 1.75,
+        borderRadius: 2.5,
+        background: (theme) => theme.palette.background.default,
+      }}
       ref={myRef}
       className="card-container"
     >
       <Stack
+        onClick={handleOpenCard}
         height="100%"
         onMouseEnter={() => setIsFlipped(true)}
         onMouseLeave={() => setIsFlipped(false)}
         className={`card ${isFlipped ? "is-flipped" : ""}`}
       >
         <div className="card-front">
-          <Card.Front card={cardData} dimensions={dimensions} />
+          <Card.Front card={card} dimensions={dimensions} />
         </div>
         <div className="card-back">
-          <Card.Back card={cardData} dimensions={dimensions} />
+          <Card.Back card={card} dimensions={dimensions} />
         </div>
       </Stack>
     </Stack>

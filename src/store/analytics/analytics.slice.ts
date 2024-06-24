@@ -39,7 +39,6 @@ export const businessSlice = createSlice({
     });
     builder.addCase(getBusinessVisits.fulfilled, (state, action) => {
       state.isLoadingVisits = false;
-      console.log(action.payload);
       state.visits = action.payload.visits;
       state.graphData = getLineChartData(
         action.payload.visits,

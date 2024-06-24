@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   FormControl,
   Grid,
   IconButton,
@@ -34,7 +35,7 @@ const Analytics = () => {
   const startDate = moment().subtract(1, "month").toISOString();
   const endDate = new Date().toISOString();
 
-  const { visits, graphData, uniqueVisits } = useAppSelector(
+  const { visits, graphData, uniqueVisits, isLoadingVisits } = useAppSelector(
     (state) => state.analytics
   );
 
@@ -51,7 +52,6 @@ const Analytics = () => {
   useEffect(() => {
     getVisitAnalytics(startDate, endDate);
     dispatch(getAllBusinessEnquiries());
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -223,40 +223,51 @@ const Analytics = () => {
                         />
                       </Stack>
                     </Stack>
-                    {graphData.length > 0 && (
-                      <LineChart
-                        sx={{
-                          [`& .${lineElementClasses.root}`]: {
-                            strokeWidth: 0,
-                          },
-                        }}
-                        xAxis={[
-                          {
-                            dataKey: "x",
-                            valueFormatter: (value) => getGraphLabel(value),
-                            min: isDayGraph
-                              ? moment(startDate).hour()
-                              : moment(startDate).dayOfYear(),
-                            max: isDayGraph
-                              ? moment(endDate).hour()
-                              : moment(endDate).dayOfYear(),
-                          },
-                        ]}
-                        series={[
-                          {
-                            dataKey: "y",
-                            area: true,
 
-                            valueFormatter: (value) =>
-                              `${value} ${
-                                (value as number) > 1 ? "Visitors" : "Visitor"
-                              }`,
-                            color: theme.palette.primary.main,
-                          },
-                        ]}
-                        dataset={graphData}
-                        height={300}
-                      />
+                    {isLoadingVisits ? (
+                      <Stack
+                        height={200}
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <CircularProgress size={100} />
+                      </Stack>
+                    ) : (
+                      graphData.length > 0 && (
+                        <LineChart
+                          sx={{
+                            [`& .${lineElementClasses.root}`]: {
+                              strokeWidth: 0,
+                            },
+                          }}
+                          xAxis={[
+                            {
+                              dataKey: "x",
+                              valueFormatter: (value) => getGraphLabel(value),
+                              min: isDayGraph
+                                ? moment(startDate).hour()
+                                : moment(startDate).dayOfYear(),
+                              max: isDayGraph
+                                ? moment(endDate).hour()
+                                : moment(endDate).dayOfYear(),
+                            },
+                          ]}
+                          series={[
+                            {
+                              dataKey: "y",
+                              area: true,
+
+                              valueFormatter: (value) =>
+                                `${value} ${
+                                  (value as number) > 1 ? "Visitors" : "Visitor"
+                                }`,
+                              color: theme.palette.primary.main,
+                            },
+                          ]}
+                          dataset={graphData}
+                          height={300}
+                        />
+                      )
                     )}
                   </Stack>
                 </Paper>

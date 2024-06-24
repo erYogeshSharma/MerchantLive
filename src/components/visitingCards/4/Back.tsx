@@ -1,11 +1,11 @@
 import React from "react";
 import { Dimensions } from "./Front";
 import { Stack } from "@mui/material";
-import cardTwoBackShape from "./cardTwoBackShape.svg";
 import CardText from "../CardText";
+import backShape from "./backShape.svg";
 import { IBusinessCard } from "@/types/business";
 import { getWidth } from "../util";
-const CardTwoBack = (
+const CardFourBack = (
   props: React.PropsWithChildren<{
     dimensions: Dimensions;
     card: IBusinessCard;
@@ -16,30 +16,32 @@ const CardTwoBack = (
       alignItems="center"
       justifyContent="center"
       sx={{
-        background: "#141717",
+        background: "#fff",
         height: "100%",
         position: "relative",
         borderRadius: 2.5,
       }}
     >
-      <Stack textAlign="center">
-        <Stack alignItems="center">
-          <img
-            src={props.card.logo}
-            style={{ height: getWidth(40, props.dimensions) }}
-          />
+      <Stack direction="row">
+        <Stack textAlign="center" sx={{ zIndex: 20 }}>
+          <Stack alignItems="center">
+            <img
+              src={props.card.logo}
+              style={{ height: getWidth(40, props.dimensions) }}
+            />
+          </Stack>
+          <CardText
+            size={16}
+            color="#162A42"
+            weight={700}
+            dimensions={props.dimensions}
+          >
+            {props.card.name}
+          </CardText>
+          <CardText size={10} color="#162A42" dimensions={props.dimensions}>
+            {props.card.title}
+          </CardText>
         </Stack>
-        <CardText
-          size={16}
-          color="#fff"
-          weight={700}
-          dimensions={props.dimensions}
-        >
-          {props.card.name}
-        </CardText>
-        <CardText size={10} color="#fff" dimensions={props.dimensions}>
-          {props.card.title}
-        </CardText>
       </Stack>
       <Stack
         sx={{
@@ -51,7 +53,7 @@ const CardTwoBack = (
         }}
       >
         <img
-          src={cardTwoBackShape}
+          src={backShape}
           style={{ borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
         />
       </Stack>
@@ -59,4 +61,4 @@ const CardTwoBack = (
   );
 };
 
-export default CardTwoBack;
+export default CardFourBack;

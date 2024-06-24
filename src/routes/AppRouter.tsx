@@ -20,10 +20,12 @@ import Settings from "../pages/settings";
 import ErrorPage from "../pages/static/ErrorPage";
 import Offers from "../pages/offers/Offers";
 import useRefreshToken from "@/hooks/useRefreshToken";
+import DummyCards from "@/pages/cards-page";
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/dummy-cards" element={<DummyCards />} />
         <Route element={<AuthRoutes />}>
           <Route path="/register" element={<AuthPage />} />
           <Route path="/login" element={<AuthPage />} />

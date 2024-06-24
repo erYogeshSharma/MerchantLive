@@ -1,6 +1,11 @@
 import { IBusinessCard } from "@/types/business";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+type PreviewCard = {
+  open: boolean;
+  card: IBusinessCard;
+  cardId: number;
+};
 type AuthState = {
   notificationOpen: boolean;
 
@@ -8,6 +13,9 @@ type AuthState = {
 
   openOnboardModal: boolean;
   error: string;
+
+  // BUSINESS CARDS
+  previewCard: PreviewCard;
 };
 
 const initialState: AuthState = {
@@ -22,6 +30,27 @@ const initialState: AuthState = {
     coverImage: "",
     linkId: "",
     isActive: false,
+    alternatePhone: 0,
+    address: "",
+    email: "",
+    phone: 0,
+  },
+  previewCard: {
+    open: false,
+    card: {
+      _id: "",
+      name: "",
+      title: "",
+      logo: "",
+      coverImage: "",
+      linkId: "",
+      isActive: false,
+      alternatePhone: 0,
+      address: "",
+      email: "",
+      phone: 0,
+    },
+    cardId: 1,
   },
 };
 
@@ -43,6 +72,12 @@ export const authSlice = createSlice({
     setBusinessId: (state, action: PayloadAction<IBusinessCard>) => {
       state.business = action.payload;
     },
+    openPreviewCard: (state, action: PayloadAction<PreviewCard>) => {
+      state.previewCard = action.payload;
+    },
+    closePreviewCard: (state) => {
+      state.previewCard = initialState.previewCard;
+    },
   },
   extraReducers: () => {
     //SIGNUP
@@ -58,6 +93,8 @@ export const {
   toggleNotificationOpen,
   toggleOnboardModal,
   setBusinessId,
+  openPreviewCard,
+  closePreviewCard,
 } = authSlice.actions;
 
 export default authSlice.reducer;
