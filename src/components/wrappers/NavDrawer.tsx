@@ -79,8 +79,14 @@ const NavDrawer = ({
         alignItems="center"
         justifyContent="flex-start"
       >
-        <Typography variant="h6" color="text.primary" noWrap component="div">
-          React Demo
+        <Typography
+          variant="h6"
+          color="primary"
+          fontWeight={700}
+          noWrap
+          component="div"
+        >
+          EBharatBiz
         </Typography>
       </Stack>
       {/* <Toolbar /> */}

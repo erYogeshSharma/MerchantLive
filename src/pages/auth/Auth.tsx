@@ -2,7 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -68,6 +67,14 @@ export default function SignIn() {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
+            <Typography
+              component="h1"
+              variant="h5"
+              fontWeight={600}
+              color="primary"
+            >
+              BharatBiz
+            </Typography>
             <Typography component="h1" variant="h5">
               {isSignUp ? "Sign up" : "Welcome back!"}
             </Typography>
@@ -119,15 +126,18 @@ export default function SignIn() {
                 </Stack>
               )}
             </Stack>
-            <Stack direction="row" alignItems="center">
-              <Checkbox />
-              <Typography variant="caption">
-                I agree to{" "}
-                <Link type="button" component="button">
-                  Term and conditions
-                </Link>{" "}
-              </Typography>
-            </Stack>
+            {isSignUp && (
+              <Stack mt={1}>
+                <Typography variant="caption">
+                  By Signing up you agree to{" "}
+                  <span>
+                    <Link type="button" component="button">
+                      Term and conditions
+                    </Link>
+                  </span>
+                </Typography>
+              </Stack>
+            )}
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
