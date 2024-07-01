@@ -86,7 +86,7 @@ const NavDrawer = ({
           noWrap
           component="div"
         >
-          EBharatBiz
+          BharatBiz
         </Typography>
       </Stack>
       {/* <Toolbar /> */}
