@@ -37,7 +37,7 @@ const Review = () => {
     >
       <PhoneMockup
         theme={form.theme}
-        src={`https://id.zapminds.com/${form.linkId}`}
+        src={`https://id.bharatbizportal.com/${form.linkId}`}
       />
       <Stack key={form.theme} spacing={2}>
         <ThemeSelector

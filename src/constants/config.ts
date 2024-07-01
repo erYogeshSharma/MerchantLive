@@ -1,1 +1,1 @@
-export const id_app_url = "https://id.zapminds.com/";
+export const id_app_url = "https://id.bharatbizportal.com/";

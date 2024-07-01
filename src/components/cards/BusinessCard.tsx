@@ -61,7 +61,7 @@ const BusinessCard = ({ business }: { business: IBusinessCard }) => {
                 <IconButton
                   size="small"
                   target="_blank"
-                  href={`https://id.zapminds.com/${business.linkId}`}
+                  href={`https://id.bharatbizportal.com/${business.linkId}`}
                 >
                   <OpenInNew fontSize="small" />
                 </IconButton>
