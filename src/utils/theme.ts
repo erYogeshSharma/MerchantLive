@@ -16,6 +16,7 @@ declare module "@mui/material/styles" {
     25?: string;
     50?: string;
     200?: string;
+    300?: string;
     400?: string;
     500?: string;
     600?: string;
@@ -70,7 +71,7 @@ function getIconColors(color: Color, mode: mode) {
 }
 const getTheme = (mode: mode): ThemeOptions => ({
   typography: {
-    fontSize: 16,
+    fontSize: 14,
     htmlFontSize: 10,
     fontFamily: inter,
     txt12: {
@@ -100,6 +101,9 @@ const getTheme = (mode: mode): ThemeOptions => ({
       styleOverrides: {
         root: {
           textTransform: "none",
+        },
+        contained: {
+          backgroundImage: `linear-gradient(90deg, ${primary[400]} 0%, ${primary[800]} 100%)`,
         },
       },
     },
@@ -156,7 +160,7 @@ const getTheme = (mode: mode): ThemeOptions => ({
     secondary: secondary,
 
     background: {
-      default: mode === "light" ? primary[50] : grey[900],
+      default: mode === "light" ? "#FAF9F6" : grey[900],
       paper: mode === "light" ? "#fff" : grey[800],
     },
   },

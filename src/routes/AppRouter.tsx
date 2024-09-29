@@ -21,6 +21,7 @@ import ErrorPage from "../pages/static/ErrorPage";
 import Offers from "../pages/offers/Offers";
 import useRefreshToken from "@/hooks/useRefreshToken";
 import DummyCards from "@/pages/cards-page";
+import Admin from "@/pages/admin/Admin";
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -42,6 +43,7 @@ const AppRouter = () => {
           <Route path="/card/edit" element={<CreateForm />} />
           {/* <Route path="/cards/create" element={<CreateForm />} /> */}
           <Route path="/settings" element={<Settings />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/settings/:bId" element={<Settings />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>

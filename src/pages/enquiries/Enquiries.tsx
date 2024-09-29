@@ -4,6 +4,7 @@ import {
   // SelectChangeEvent,
   Stack,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -12,15 +13,18 @@ import {
   getAllBusinessEnquiries,
 } from "../../store/business/business-api";
 
-import image from "../../assets/design.svg";
 import EnquiryCard from "../../components/cards/EnquiryCard";
 import PageTitle from "../../components/shared/PageTitle";
 import StaticPageWrapper from "../../components/wrappers/StaticPageWrapper";
 import EnquiryTable from "./EnquiryTable";
+import { not_found_image } from "@/assets/SVGs/not_found";
+import svgToDataUrl from "@/utils/stringToImage";
+import useLoadBusiness from "@/hooks/getBusinessId";
 
 const Enquiries = () => {
+  const theme = useTheme();
   const dispatch = useAppDispatch();
-
+  const business = useLoadBusiness();
   const isSmallScreen = useMediaQuery("(max-width:600px)");
 
   // const handleChange = (event: SelectChangeEvent) => {
@@ -40,7 +44,9 @@ const Enquiries = () => {
     //   }
     // } else {
 
-    dispatch(getAllBusinessEnquiries());
+    if (business._id) {
+      dispatch(getAllBusinessEnquiries());
+    }
 
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,7 +96,7 @@ const Enquiries = () => {
           </>
         ) : (
           <StaticPageWrapper
-            image={image}
+            image={svgToDataUrl(not_found_image(theme.palette.primary.main))}
             description="There are no new enquiries at the moment. Check back later or promote your business to attract potential clients."
             title="No Enquiries Yet"
           ></StaticPageWrapper>

@@ -4,9 +4,17 @@ import SideBar from "./SideBar";
 import { useSearchParams } from "react-router-dom";
 import Profile from "./Profile";
 import Billing from "./Billing";
-import { Money, Person, Support } from "@mui/icons-material";
+import LinkIcon from "@mui/icons-material/Link";
+import {
+  ConnectWithoutContact,
+  Money,
+  Person,
+  Support,
+} from "@mui/icons-material";
 import Feedback from "./Feedback";
 import { useEffect } from "react";
+import Referral from "./Referral";
+import Domain from "./Domain";
 const nav = [
   {
     title: "Profile",
@@ -22,6 +30,16 @@ const nav = [
     title: "Feedback",
     value: "feedback",
     icon: Support,
+  },
+  {
+    title: "Referral",
+    value: "referral",
+    icon: ConnectWithoutContact,
+  },
+  {
+    title: "Domain",
+    value: "domain",
+    icon: LinkIcon,
   },
 ];
 const Settings = () => {
@@ -58,6 +76,8 @@ const Settings = () => {
                   profile: <Profile />,
                   billing: <Billing />,
                   feedback: <Feedback />,
+                  referral: <Referral />,
+                  domain: <Domain />,
                 }[tab]
               }
             </Stack>

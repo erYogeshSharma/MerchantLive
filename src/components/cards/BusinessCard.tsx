@@ -15,6 +15,7 @@ import { resetForm } from "../../store/business-form/business-form-slice";
 import { useAppDispatch } from "../../store/hooks";
 import ButtonMenu from "../shared/ButtonMenu";
 import { IBusinessCard } from "@/types/business";
+import { id_app_url } from "@/constants/config";
 
 const BusinessCard = ({ business }: { business: IBusinessCard }) => {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ const BusinessCard = ({ business }: { business: IBusinessCard }) => {
                 <IconButton
                   size="small"
                   target="_blank"
-                  href={`https://id.bharatbizportal.com/${business.linkId}`}
+                  href={`${id_app_url}/${business.linkId}`}
                 >
                   <OpenInNew fontSize="small" />
                 </IconButton>

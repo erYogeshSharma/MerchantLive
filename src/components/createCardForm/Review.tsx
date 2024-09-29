@@ -8,6 +8,7 @@ import ThemeSelector from "../shared/ThemeSelector";
 import { update_settings } from "../../api";
 import { updateForm } from "../../store/business-form/business-form-slice";
 import { useState } from "react";
+import { id_app_url } from "@/constants/config";
 const Review = () => {
   const dispatch = useAppDispatch();
   const [updatingTheme, setUpdatingTheme] = useState(false);
@@ -35,10 +36,7 @@ const Review = () => {
       justifyContent="center"
       spacing={{ xs: 1, md: 3 }}
     >
-      <PhoneMockup
-        theme={form.theme}
-        src={`https://id.bharatbizportal.com/${form.linkId}`}
-      />
+      <PhoneMockup theme={form.theme} src={`${id_app_url}/${form.linkId}`} />
       <Stack key={form.theme} spacing={2}>
         <ThemeSelector
           loading={updatingTheme}

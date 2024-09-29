@@ -44,6 +44,7 @@ export type IBusinessCard = {
   address: string;
   email: string;
   phone: number;
+  customDomain: string;
 };
 export type IBusinessForm = {
   //BASIC INFO (active step-1)

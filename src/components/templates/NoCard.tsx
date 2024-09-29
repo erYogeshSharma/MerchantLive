@@ -1,17 +1,21 @@
 import StaticPageWrapper from "../wrappers/StaticPageWrapper";
-import { Button } from "@mui/material";
-import placeholder from "../../assets/design.svg";
+import { Button, useTheme } from "@mui/material";
+
 import { useAppDispatch } from "../../store/hooks";
 import { toggleOnboardModal } from "../../store/app/app-slice";
+import { not_found_image } from "@/assets/SVGs/not_found";
+import svgToDataUrl from "@/utils/stringToImage";
 
 const NoCard = () => {
+  const theme = useTheme();
   const dispatch = useAppDispatch();
   function handleCreateOpen() {
     dispatch(toggleOnboardModal(true));
   }
+
   return (
     <StaticPageWrapper
-      image={placeholder}
+      image={svgToDataUrl(not_found_image(theme.palette.primary.main))}
       title="Welcome! Let's Get Started"
       description="It looks like you haven't created any pages yet. Click the button
         below to create your first page and start building your content.

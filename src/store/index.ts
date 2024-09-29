@@ -6,6 +6,7 @@ import cardFormSlice from "./business-form/business-form-slice";
 import businessSlice from "./business/business-slice";
 import appSlice from "./app/app-slice";
 import analyticsSlice from "./analytics/analytics.slice";
+import adminSlice from "./admin/admin-slice";
 
 const reducers = combineReducers({
   app: appSlice,
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   businessForm: cardFormSlice,
   business: businessSlice,
   analytics: analyticsSlice,
+  admin: adminSlice,
 });
 
 const persistConfig = {

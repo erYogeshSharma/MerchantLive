@@ -24,13 +24,14 @@ import { useNavigate } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
 import { OpenInFull } from "@mui/icons-material";
 import { getAllBusinessEnquiries } from "@/store/business/business-api";
+import useLoadBusiness from "@/hooks/getBusinessId";
 
 const Analytics = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
-  const { business } = useAppSelector((state) => state.app);
+  const business = useLoadBusiness();
   const { enquires } = useAppSelector((state) => state.business);
   const startDate = moment().subtract(1, "month").toISOString();
   const endDate = new Date().toISOString();
@@ -48,10 +49,13 @@ const Analytics = () => {
       })
     );
   }
+
   //get the visits if cards are available
   useEffect(() => {
-    getVisitAnalytics(startDate, endDate);
-    dispatch(getAllBusinessEnquiries());
+    if (business._id) {
+      getVisitAnalytics(startDate, endDate);
+      dispatch(getAllBusinessEnquiries());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -128,7 +132,7 @@ const Analytics = () => {
 
   return (
     <Box>
-      {business._id ? (
+      {business?._id ? (
         <>
           <PageTitle title="Analytics" desc="Analytics for your business page">
             <FormControl sx={{ m: 1, minWidth: 190 }} size="small">

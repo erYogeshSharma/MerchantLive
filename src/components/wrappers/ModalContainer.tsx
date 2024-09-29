@@ -18,7 +18,7 @@ const style = {
   borderRadius: 1,
 };
 
-export default function DrawerContainer({
+export default function ModalContainer({
   open,
   handleClose,
   footer,
@@ -27,7 +27,7 @@ export default function DrawerContainer({
 }: {
   open: boolean;
   handleClose: () => void;
-  footer?: React.ReactNode;
+  footer?: JSX.Element;
   children: React.ReactNode;
   label: string;
 }) {

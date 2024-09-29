@@ -17,8 +17,9 @@ const initialState: AuthState = {
     _id: "",
     name: "",
     email: "",
-    roles: [],
+    role: "USER",
     profilePicUrl: "",
+    referralCode: "",
   },
   tokens: {
     accessToken: "",
@@ -40,8 +41,8 @@ export const authSlice = createSlice({
       state.isAuthenticating = false;
     },
     signOut: (state) => {
-      state.user = initialState.user;
-      state.tokens = initialState.tokens;
+      state = initialState;
+      return state;
     },
   },
   extraReducers: (builder) => {

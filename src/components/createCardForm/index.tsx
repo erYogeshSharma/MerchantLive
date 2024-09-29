@@ -22,6 +22,8 @@ const CreateCardForm = () => {
   const { steps, activeStep, apiError } = useAppSelector(
     (state) => state.businessForm
   );
+  console.log(steps, activeStep);
+
   const isSmallScreen = useMediaQuery("(max-width: 800px)");
   return (
     <Box>

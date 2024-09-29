@@ -73,6 +73,7 @@ const OnboardModal = () => {
   /*                                 CLOSE MODAL                                */
   /* -------------------------------------------------------------------------- */
   const handleClose = () => {
+    localStorage.setItem("onboard_shown", "true");
     dispatch(toggleOnboardModal(false));
   };
 
@@ -92,7 +93,7 @@ const OnboardModal = () => {
   }
   //Check link availability on form change
   useEffect(() => {
-    if (openOnboardModal) {
+    if (openOnboardModal && form.linkId) {
       checkAvailability();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

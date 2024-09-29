@@ -26,14 +26,13 @@ interface Props {
 }
 
 export default function DashboardWrapper(props: Props) {
+  useLoadBusiness();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const business = useLoadBusiness();
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
       setMobileOpen(!mobileOpen);
-      console.log(business);
     }
   };
 

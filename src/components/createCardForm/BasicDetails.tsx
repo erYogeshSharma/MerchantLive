@@ -80,7 +80,7 @@ const BasicDetails = () => {
         onChange={handleChange}
         value={form.title}
         error={!!errors["title"]}
-        helperText={errors.title ? errors.title : `${form.title.length}/45`}
+        helperText={errors.title ? errors.title : `${form.title?.length}/45`}
         inputProps={{ maxLength: 45 }}
       />
       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">

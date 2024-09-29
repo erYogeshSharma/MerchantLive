@@ -2,6 +2,8 @@ import { delete_offer } from "@/api";
 import CreateOfferModal from "@/components/popups/CreateOfferModal";
 import DeleteConfirmModal from "@/components/shared/DeleteConfrmButton";
 import PageTitle from "@/components/shared/PageTitle";
+import NoCard from "@/components/templates/NoCard";
+import useLoadBusiness from "@/hooks/getBusinessId";
 import {
   getAllBusinessOffers,
   updateBusinessOffer,
@@ -13,6 +15,7 @@ import { Edit } from "@mui/icons-material";
 import {
   Button,
   IconButton,
+  LinearProgress,
   Paper,
   Stack,
   Switch,
@@ -30,7 +33,8 @@ import { toast } from "react-toastify";
 
 const Offers = () => {
   const dispatch = useAppDispatch();
-  const { business } = useAppSelector((state) => state.app);
+
+  const business = useLoadBusiness();
   const { loadingOffers, offers } = useAppSelector((state) => state.business);
 
   function handleCreateOpen() {
@@ -77,67 +81,77 @@ const Offers = () => {
         title="Offers"
         desc="Offers lets you show your customers a offer as soon they visit your business card."
       >
-        <Button variant="contained" onClick={handleCreateOpen}>
-          Create a offer
-        </Button>
+        {business._id && (
+          <Button variant="contained" onClick={handleCreateOpen}>
+            Create a offer
+          </Button>
+        )}
       </PageTitle>
 
       {loadingOffers && !offers.length ? (
-        <div>Loading...</div>
+        <LinearProgress />
       ) : (
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Title</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Starts On</TableCell>
-                <TableCell>Ends On</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {offers.map((offer) => (
-                <TableRow key={offer._id}>
-                  <TableCell>{offer.title}</TableCell>
-                  <TableCell>{offer.description}</TableCell>
-                  <TableCell>
-                    {moment(offer.startsOn).format("DD MMM YY")}
-                  </TableCell>
-                  <TableCell>
-                    {moment(offer.endsOn).format("DD MMM YY")}
-                  </TableCell>
-                  <TableCell>
-                    <Stack direction="row" alignItems="center" spacing={2}>
-                      <Tooltip
-                        title={
-                          offer.isActive
-                            ? "Click to disable this offer."
-                            : "Click to enable this offer."
-                        }
-                      >
-                        <Switch
-                          checked={offer.isActive}
-                          onChange={() => toggleBusinessStatus(offer)}
-                        />
-                      </Tooltip>
+        <>
+          {business._id ? (
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell>Starts On</TableCell>
+                    <TableCell>Ends On</TableCell>
+                    <TableCell>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {offers.map((offer) => (
+                    <TableRow key={offer._id}>
+                      <TableCell>{offer.title}</TableCell>
+                      <TableCell>{offer.description}</TableCell>
+                      <TableCell>
+                        {moment(offer.startsOn).format("DD MMM YY")}
+                      </TableCell>
+                      <TableCell>
+                        {moment(offer.endsOn).format("DD MMM YY")}
+                      </TableCell>
+                      <TableCell>
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <Tooltip
+                            title={
+                              offer.isActive
+                                ? "Click to disable this offer."
+                                : "Click to enable this offer."
+                            }
+                          >
+                            <Switch
+                              checked={offer.isActive}
+                              onChange={() => toggleBusinessStatus(offer)}
+                            />
+                          </Tooltip>
 
-                      <Tooltip title="Edit Offer">
-                        <IconButton onClick={() => handleEdit(offer)}>
-                          <Edit />
-                        </IconButton>
-                      </Tooltip>
-                      <DeleteConfirmModal
-                        loading={deleting === offer._id}
-                        handleDelete={() => handleDelete(offer?._id as string)}
-                      />
-                    </Stack>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                          <Tooltip title="Edit Offer">
+                            <IconButton onClick={() => handleEdit(offer)}>
+                              <Edit />
+                            </IconButton>
+                          </Tooltip>
+                          <DeleteConfirmModal
+                            loading={deleting === offer._id}
+                            handleDelete={() =>
+                              handleDelete(offer?._id as string)
+                            }
+                          />
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            <NoCard />
+          )}
+        </>
       )}
     </div>
   );

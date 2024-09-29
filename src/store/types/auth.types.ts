@@ -5,31 +5,29 @@ export type SignInForm = {
 
 export type SignUpForm = SignInForm & {
   name: string;
+  referralCode?: string;
 };
 
 export type Tokens = {
-  accessToken:string,
-  refreshToken:string
-}
+  accessToken: string;
+  refreshToken: string;
+};
 
-export type UserRole={
-  _id:string,
-  code:string,
-  status:boolean
-}
+export type UserRole = "ADMIN" | "USER";
 
-export type User={
-  _id:string,
-  name:string,
-  email:string,
-  roles:UserRole[],
-  profilePicUrl:string
-}
+export type User = {
+  _id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  profilePicUrl: string;
+  referralCode: string;
+};
 export type AuthResponse = {
-    "statusCode": string,
-    "message":string,
-    "data": {
-        "user": User,
-        "tokens": Tokens
-    }
-}
+  statusCode: string;
+  message: string;
+  data: {
+    user: User;
+    tokens: Tokens;
+  };
+};

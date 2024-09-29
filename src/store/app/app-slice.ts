@@ -34,6 +34,7 @@ const initialState: AuthState = {
     address: "",
     email: "",
     phone: 0,
+    customDomain: "",
   },
   previewCard: {
     open: false,
@@ -49,6 +50,7 @@ const initialState: AuthState = {
       address: "",
       email: "",
       phone: 0,
+      customDomain: "",
     },
     cardId: 1,
   },
@@ -78,6 +80,10 @@ export const authSlice = createSlice({
     closePreviewCard: (state) => {
       state.previewCard = initialState.previewCard;
     },
+    clearAppData: (state) => {
+      state = initialState;
+      return state;
+    },
   },
   extraReducers: () => {
     //SIGNUP
@@ -95,6 +101,7 @@ export const {
   setBusinessId,
   openPreviewCard,
   closePreviewCard,
+  clearAppData,
 } = authSlice.actions;
 
 export default authSlice.reducer;

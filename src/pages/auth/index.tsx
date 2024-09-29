@@ -4,7 +4,7 @@ import { Grid, Stack } from "@mui/material";
 // import ToggleTheme from "../../components/shared/ToggleTheme";
 const AuthPage = () => {
   return (
-    <Grid container spacing={2}>
+    <Grid>
       {/* <Grid item xs={12} md={5} lg={7}> */}
       <Stack
         width="100vw"

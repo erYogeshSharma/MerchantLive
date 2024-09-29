@@ -8,6 +8,7 @@ import { signOut } from "../../store/auth/auth-slice";
 import { log_out } from "../../api";
 
 import RandomAvatar from "./RandomAvatar";
+import { clearAppData } from "@/store/app/app-slice";
 export default function UserMenu() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -25,13 +26,15 @@ export default function UserMenu() {
   const handleLogout = async () => {
     try {
       const { data } = await log_out();
+      dispatch(clearAppData());
+      localStorage.clear();
+      dispatch(signOut());
+      navigate("/login");
       console.log(data.message);
     } catch (error) {
+      localStorage.clear();
       console.log(error);
     }
-    localStorage.removeItem("token");
-    dispatch(signOut());
-    navigate("/login");
   };
   return (
     <div>

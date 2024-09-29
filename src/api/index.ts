@@ -4,6 +4,7 @@ import { IBusinessForm, Query } from "../types/business";
 import { toast } from "react-toastify";
 
 import { Offer } from "@/types/business";
+import { api_url } from "@/constants/config";
 
 type Token = {
   accessToken: string;
@@ -11,8 +12,8 @@ type Token = {
 };
 
 const API = axios.create({
-  baseURL: "https://mapi.zapminds.com/",
-  // baseURL: "http://localhost:8080",
+  // baseURL: "https://mapi.zapminds.com/",
+  baseURL: api_url,
   // baseURL: "https://9b37-2406-7400-98-df77-61dd-533e-fa3d-9f42.ngrok-free.app/",
 });
 
@@ -38,14 +39,16 @@ API.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    console.log({ response });
     return response;
   },
   function (error) {
-    if (error.response.data.message === "Invalid Access Token") {
+    if (error.response.data.statusCode === "10003") {
       toast.error("Session Expired");
       localStorage.clear();
       window.location.href = "/";
     }
+    console.log({ error });
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error);
@@ -79,7 +82,7 @@ export const update_user_info = (data: Partial<User>) =>
   API.patch(`/user/profile`, data);
 export const send_feedback = (data: { message: string }) =>
   API.post("user/feedback", data);
-
+export const get_referrals = () => API.get("user/referrals");
 /* -------------------------------------------------------------------------- */
 /*                                  BUSINESS                                  */
 /* -------------------------------------------------------------------------- */
@@ -135,3 +138,18 @@ export const update_offer = (offer: Partial<Offer>) =>
   API.patch(`/business/offer/${offer._id}`, offer);
 export const delete_offer = (offerId: string) =>
   API.delete(`/business/offer/${offerId}`);
+
+/* -------------------------------------------------------------------------- */
+/*                                   Domain                                   */
+/* -------------------------------------------------------------------------- */
+
+export const add_domain = (domain: string) =>
+  API.post(`/business/domains`, { domain });
+export const get_domain_status = () => API.get(`/business/domains`);
+export const delete_domain = () => API.delete(`/business/domains `);
+
+/* -------------------------------------------------------------------------- */
+/*                                    ADMIN                                   */
+/* -------------------------------------------------------------------------- */
+
+export const get_all_users = () => API.get("/admin/users");

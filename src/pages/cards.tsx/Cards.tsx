@@ -1,7 +1,5 @@
-import * as React from "react";
 import { Grid, LinearProgress, Stack, Typography } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getAllBusiness } from "../../store/business/business-api";
+import { useAppSelector } from "../../store/hooks";
 import BusinessCard from "../../components/cards/BusinessCard";
 import PageTitle from "../../components/shared/PageTitle";
 import NoCard from "../../components/templates/NoCard";
@@ -10,13 +8,8 @@ import DownloadPreview from "@/components/visitingCards/DownloadPreview";
 // import VisitingCard from "@/components/visitingCards";
 
 export default function DataTable() {
-  const dispatch = useAppDispatch();
   const { cards, loadingCards } = useAppSelector((state) => state.business);
   const preview = useAppSelector((state) => state.app.previewCard);
-  React.useEffect(() => {
-    dispatch(getAllBusiness());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div
@@ -27,7 +20,6 @@ export default function DataTable() {
     >
       <PageTitle title="Business Card"></PageTitle>
       {loadingCards && <LinearProgress />}
-
       <Stack>
         {cards.length ? (
           <Grid container spacing={2}>
@@ -39,16 +31,18 @@ export default function DataTable() {
           <NoCard />
         )}
       </Stack>
-      <Stack mt={2}>
-        <Stack mb={1}>
-          <Typography fontWeight={600} variant="h5">
-            Visiting Cards
-          </Typography>
-          <Typography variant="body2">
-            Click on a business card to download
-          </Typography>
-        </Stack>
-        {cards.length && (
+
+      {cards.length > 0 && (
+        <Stack mt={2}>
+          <Stack mb={1}>
+            <Typography fontWeight={600} variant="h5">
+              Visiting Cards
+            </Typography>
+            <Typography variant="body2">
+              Click on a business card to download
+            </Typography>
+          </Stack>
+
           <Stack>
             {preview?.open && <DownloadPreview />}
             <Grid container spacing={2}>
@@ -66,8 +60,8 @@ export default function DataTable() {
               </Grid>
             </Grid>
           </Stack>
-        )}
-      </Stack>
+        </Stack>
+      )}
     </div>
   );
 }

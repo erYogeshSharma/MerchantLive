@@ -19,7 +19,12 @@ const PasswordInput = (props: OutlinedInputProps) => {
     event.preventDefault();
   };
   return (
-    <FormControl size={props.size} variant="outlined" fullWidth>
+    <FormControl
+      size={props.size}
+      variant="outlined"
+      fullWidth
+      required={props.required}
+    >
       <InputLabel htmlFor="outlined-adornment-password">
         {props.label || "Password"}
       </InputLabel>

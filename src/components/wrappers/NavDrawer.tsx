@@ -8,6 +8,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {
+  AdminPanelSettings,
   Analytics,
   CardTravelSharp,
   Discount,
@@ -17,32 +18,44 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { Stack, Typography } from "@mui/material";
 import UpgradeToPro from "../shared/UpgradeToPro";
+import { useAppSelector } from "@/store/hooks";
 
 const navItems = [
   {
     title: "Analytics",
     icon: <Analytics />,
     href: "analytics",
+    access: "USER",
   },
   {
     title: "Card",
     icon: <CardTravelSharp />,
     href: "card",
+    access: "USER",
   },
   {
     title: "Offers",
     icon: <Discount />,
     href: "offers",
+    access: "USER",
   },
   {
     title: "Enquiries",
     icon: <Feedback />,
     href: "enquiries",
+    access: "USER",
   },
   {
     title: "Settings",
     icon: <Settings />,
     href: "settings",
+    access: "USER",
+  },
+  {
+    title: "Admin",
+    icon: <AdminPanelSettings />,
+    href: "admin",
+    access: "ADMIN",
   },
 ];
 
@@ -67,7 +80,8 @@ const NavDrawer = ({
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname.split("/")[1];
-
+  const { user } = useAppSelector((state) => state.auth);
+  console.log(user);
   // Remove this const when copying and pasting into your project.
 
   const drawer = (
@@ -96,17 +110,19 @@ const NavDrawer = ({
         justifyContent="space-between"
       >
         <List>
-          {navItems.map((Item, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton
-                onClick={() => navigate(`/${Item.href}`)}
-                selected={currentPath === Item.href}
-              >
-                <ListItemIcon color="primary">{Item.icon}</ListItemIcon>
-                <ListItemText primary={Item.title} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {navItems
+            .filter((n) => n.access === user.role || n.access === "USER")
+            .map((Item, index) => (
+              <ListItem key={index} disablePadding>
+                <ListItemButton
+                  onClick={() => navigate(`/${Item.href}`)}
+                  selected={currentPath === Item.href}
+                >
+                  <ListItemIcon color="primary">{Item.icon}</ListItemIcon>
+                  <ListItemText primary={Item.title} />
+                </ListItemButton>
+              </ListItem>
+            ))}
         </List>
         <Stack>
           <UpgradeToPro />
