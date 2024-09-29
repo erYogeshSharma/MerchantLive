@@ -47,7 +47,7 @@ const Referral = () => {
     { name: string; email: string; createdAt: string }[]
   >([]);
 
-  const link = app_url + "register?referral-code=" + user.referralCode;
+  const link = app_url + "/register?referral-code=" + user.referralCode;
 
   function copyLink() {
     navigator.clipboard.writeText(link);
