@@ -16,17 +16,20 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Link,
   Typography,
+  Chip,
 } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import EditUser from "./Modals/EditUser";
 import { User } from "@/types/admin";
+import { id_app_url } from "@/constants/config";
 
 const Admin = () => {
   const dispatch = useAppDispatch();
 
-  const [userToEdit, setUserToEdit] = useState("");
+  const [userToEdit, setUserToEdit] = useState({} as User);
   const [openUserModal, setOpenUserModal] = useState(false);
   const { users, isLoadingUsers } = useAppSelector((state) => state.admin);
 
@@ -35,27 +38,25 @@ const Admin = () => {
   }, []);
 
   function handleUserEditOpen(user: User) {
-    setUserToEdit(user._id);
+    setUserToEdit(user);
     setOpenUserModal(true);
   }
   return (
     <Box>
-      <EditUser
-        open={openUserModal}
-        handleClose={() => setOpenUserModal(false)}
-        userToEdit={userToEdit}
-      />
+      <EditUser open={openUserModal} handleClose={() => setOpenUserModal(false)} userToEdit={userToEdit} />
       <Typography variant="h6" fontWeight={600}>
         Admin
       </Typography>
       {isLoadingUsers && <LinearProgress />}
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{ maxWidth: "100%", overflowX: "auto" }}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>User</TableCell>
-              <TableCell>Created At</TableCell>
               <TableCell>Business</TableCell>
+              <TableCell>Joined Date</TableCell>
+              <TableCell>Plan Start Date </TableCell>
+              <TableCell>Plan End Date</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
@@ -64,22 +65,42 @@ const Admin = () => {
               <TableRow key={user._id}>
                 <TableCell>
                   <Stack direction="row" alignItems="center" spacing={2}>
-                    {user.profilePicUrl ? (
-                      <Avatar src={user.profilePicUrl} />
-                    ) : (
-                      <RandomAvatar name={user.name} />
-                    )}
+                    {user.profilePicUrl ? <Avatar src={user.profilePicUrl} /> : <RandomAvatar name={user.name} />}
                     <Stack>
                       <Typography fontWeight={600}>{user.name}</Typography>
                       <Typography variant="caption">{user.email}</Typography>
                     </Stack>
                   </Stack>
                 </TableCell>
-
                 <TableCell>
-                  {moment(user.createdAt).format("DD MMMM YYYY")}
+                  {user.business?._id ? (
+                    <Stack>
+                      <Typography variant="subtitle2">
+                        <b> Name:</b> {user.business?.name}
+                      </Typography>
+
+                      <Typography variant="subtitle2">
+                        <b> Link :</b>
+                        <Link target="_blank" href={`${id_app_url}/${user.business?.linkId}`}>
+                          {" "}
+                          {user.business?.linkId}{" "}
+                        </Link>
+                      </Typography>
+                    </Stack>
+                  ) : (
+                    <Chip label="Not Created" variant="filled" color="error" />
+                  )}
                 </TableCell>
-                <TableCell>{user.business}</TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2">{moment(user.createdAt).format("DD MMMM YYYY")}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2">{moment(user.plan_start_date).format("DD MMMM YYYY")}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2">{moment(user.plan_end_date).format("DD MMMM YYYY")}</Typography>
+                </TableCell>
+
                 <TableCell>
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <IconButton onClick={() => handleUserEditOpen(user)}>

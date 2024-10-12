@@ -1,18 +1,7 @@
 import { closePreviewCard } from "@/store/app/app-slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { CloseOutlined, Download } from "@mui/icons-material";
-import {
-  Backdrop,
-  Box,
-  Button,
-  Divider,
-  Fade,
-  Grid,
-  IconButton,
-  Modal,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Backdrop, Box, Button, Divider, Fade, Grid, IconButton, Modal, Stack, Typography } from "@mui/material";
 import Cards from "./cards";
 import { useEffect, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
@@ -59,11 +48,7 @@ const Card = ({ side }: { side: "Front" | "Back" }) => {
         ref={myRef}
         className="card-container"
       >
-        {side === "Front" ? (
-          <Front card={card} dimensions={dimensions} />
-        ) : (
-          <Back card={card} dimensions={dimensions} />
-        )}
+        {side === "Front" ? <Front card={card} dimensions={dimensions} /> : <Back card={card} dimensions={dimensions} />}
       </Stack>
     </Grid>
   );
@@ -89,6 +74,9 @@ const DownloadPreview = () => {
         link.download = card.name;
         link.href = dataUrl;
         link.click();
+      })
+      .catch((err) => {
+        console.error("Download failed", err);
       });
   }
 
@@ -109,11 +97,7 @@ const DownloadPreview = () => {
     >
       <Fade in={open}>
         <Box sx={style}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
+          <Stack direction="row" alignItems="center" justifyContent="space-between">
             <Typography variant="body1" fontWeight={600}>
               Download Business Card
             </Typography>
@@ -125,12 +109,7 @@ const DownloadPreview = () => {
             <Divider />
           </Stack>
 
-          <Grid
-            container
-            spacing={1}
-            className="card-preview"
-            id="card-preview"
-          >
+          <Grid container spacing={1} className="card-preview" id="card-preview">
             {c.map((C, i) => (
               <Grid item xs={12} md={6} key={i}>
                 <Card side={C as "Front" | "Back"} />
@@ -139,11 +118,7 @@ const DownloadPreview = () => {
           </Grid>
 
           <Stack alignItems="center" mt={2}>
-            <Button
-              onClick={handleDownload}
-              variant="contained"
-              startIcon={<Download />}
-            >
+            <Button onClick={handleDownload} variant="contained" startIcon={<Download />}>
               <Typography>Download Card</Typography>
             </Button>
           </Stack>

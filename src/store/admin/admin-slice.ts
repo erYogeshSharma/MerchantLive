@@ -1,5 +1,5 @@
 import { User } from "@/types/admin";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getAllUsers } from "./admin-api";
 
 type AdminState = {
@@ -24,6 +24,15 @@ export const adminSlice = createSlice({
       state.error = "";
       state.isLoadingUsers = false;
     },
+    updateUserPlan: (state, action: PayloadAction<Partial<User>>) => {
+      console.log({ user: action.payload });
+      state.users = state.users.map((user) => {
+        if (user._id === action.payload._id) {
+          return { ...user, ...action.payload };
+        }
+        return user;
+      });
+    },
   },
 
   extraReducers: (builder) => {
@@ -43,4 +52,4 @@ export const adminSlice = createSlice({
 });
 
 export default adminSlice.reducer;
-export const { clearErrors } = adminSlice.actions;
+export const { clearErrors, updateUserPlan } = adminSlice.actions;

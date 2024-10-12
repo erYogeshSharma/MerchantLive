@@ -8,9 +8,7 @@ import PageTitle from "../../components/shared/PageTitle";
 
 const CreateForm = () => {
   const dispatch = useAppDispatch();
-  const { businessDetails, loadingDetails } = useAppSelector(
-    (state) => state.business
-  );
+  const { businessDetails, loadingDetails } = useAppSelector((state) => state.business);
 
   useEffect(() => {
     dispatch(getBusinessDetails());
@@ -26,7 +24,7 @@ const CreateForm = () => {
   }, [businessDetails]);
   return (
     <div>
-      <PageTitle title={"Create Card"} />
+      <PageTitle title={"Create Business"} />
       {loadingDetails && <LinearProgress />}
       <CreateCardForm />
     </div>

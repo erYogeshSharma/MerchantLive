@@ -13,13 +13,7 @@ import { id_app_url } from "@/constants/config";
 import ContactButton from "../shared/ContactButton";
 import { useAppSelector } from "@/store/hooks";
 
-const CardOneFront = ({
-  dimensions,
-  card,
-}: {
-  dimensions: Dimensions;
-  card: IBusinessCard;
-}) => {
+const CardOneFront = ({ dimensions, card }: { dimensions: Dimensions; card: IBusinessCard }) => {
   //CONTACT BUTTONS
   const contactButtons = [
     {
@@ -41,21 +35,8 @@ const CardOneFront = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   return (
-    <Stack
-      sx={{ background: "#fff", borderRadius: 2.5 }}
-      height="100%"
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
-    >
-      <Stack
-        flexGrow={1}
-        p={2}
-        direction="column"
-        alignItems="flex-start"
-        justifyContent="space-between"
-        height="100%"
-      >
+    <Stack sx={{ background: "#fff", borderRadius: 2.5 }} height="100%" direction="row" alignItems="center" justifyContent="space-between">
+      <Stack flexGrow={1} p={2} direction="column" alignItems="flex-start" justifyContent="space-between" height="100%">
         <Stack>
           <CardText size={14} dimensions={dimensions}>
             {user.name}

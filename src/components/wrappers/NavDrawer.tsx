@@ -7,14 +7,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import {
-  AdminPanelSettings,
-  Analytics,
-  CardTravelSharp,
-  Discount,
-  Feedback,
-  Settings,
-} from "@mui/icons-material";
+import { AdminPanelSettings, Analytics, CardTravelSharp, Discount, Feedback, Settings } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Stack, Typography } from "@mui/material";
 import UpgradeToPro from "../shared/UpgradeToPro";
@@ -81,61 +74,40 @@ const NavDrawer = ({
   const location = useLocation();
   const currentPath = location.pathname.split("/")[1];
   const { user } = useAppSelector((state) => state.auth);
-  console.log(user);
   // Remove this const when copying and pasting into your project.
 
   const drawer = (
     <div>
-      <Stack
-        px={2}
-        sx={{ height: 64 }}
-        direction="row"
-        alignItems="center"
-        justifyContent="flex-start"
-      >
-        <Typography
-          variant="h6"
-          color="primary"
-          fontWeight={700}
-          noWrap
-          component="div"
-        >
+      <Stack px={2} sx={{ height: 64 }} direction="row" alignItems="center" justifyContent="flex-start">
+        <Typography variant="h6" color="primary" fontWeight={700} noWrap component="div">
           BharatBiz
         </Typography>
       </Stack>
       {/* <Toolbar /> */}
       <Divider />
-      <Stack
-        sx={{ height: "calc(100vh - 68px)" }}
-        justifyContent="space-between"
-      >
+      <Stack sx={{ height: "calc(100vh - 68px)" }} justifyContent="space-between">
         <List>
           {navItems
             .filter((n) => n.access === user.role || n.access === "USER")
             .map((Item, index) => (
               <ListItem key={index} disablePadding>
-                <ListItemButton
-                  onClick={() => navigate(`/${Item.href}`)}
-                  selected={currentPath === Item.href}
-                >
+                <ListItemButton onClick={() => navigate(`/${Item.href}`)} selected={currentPath === Item.href}>
                   <ListItemIcon color="primary">{Item.icon}</ListItemIcon>
                   <ListItemText primary={Item.title} />
                 </ListItemButton>
               </ListItem>
             ))}
         </List>
-        <Stack>
-          <UpgradeToPro />
-        </Stack>
+        {user.is_paid_plan !== "ACTIVE" && (
+          <Stack>
+            <UpgradeToPro />
+          </Stack>
+        )}
       </Stack>
     </div>
   );
   return (
-    <Box
-      component="nav"
-      sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-      aria-label="mailbox folders"
-    >
+    <Box component="nav" sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }} aria-label="mailbox folders">
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
       <Drawer
         variant="temporary"

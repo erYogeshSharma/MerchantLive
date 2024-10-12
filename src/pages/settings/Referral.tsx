@@ -1,13 +1,9 @@
 import { get_referrals } from "@/api";
-import { app_url } from "@/constants/config";
+import RandomAvatar from "@/components/shared/RandomAvatar";
+import { app_url, id_app_url } from "@/constants/config";
 import { useAppSelector } from "@/store/hooks";
-import {
-  ArrowForward,
-  InsertLink,
-  LinkOutlined,
-  LockOpen,
-  RedeemRounded,
-} from "@mui/icons-material";
+import { User } from "@/types/admin";
+import { ArrowForward, InsertLink, LinkOutlined, LockOpen, RedeemRounded } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -22,8 +18,13 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Link,
+  Chip,
+  Avatar,
 } from "@mui/material";
+import moment from "moment";
 import { useEffect, useState } from "react";
+
 import { toast } from "react-toastify";
 
 const Steps = [
@@ -43,11 +44,9 @@ const Steps = [
 const Referral = () => {
   const { user } = useAppSelector((state) => state.auth);
 
-  const [referrals, setReferrals] = useState<
-    { name: string; email: string; createdAt: string }[]
-  >([]);
+  const [referrals, setReferrals] = useState<User[]>([]);
 
-  const link = app_url + "/register?referral-code=" + user.referralCode;
+  const link = app_url + "register?referral-code=" + user.referralCode;
 
   function copyLink() {
     navigator.clipboard.writeText(link);
@@ -76,8 +75,7 @@ const Referral = () => {
         width={60}
         sx={{
           borderRadius: "50%",
-          backgroundImage: (theme) =>
-            `linear-gradient( ${theme.palette.primary[300]}, ${theme.palette.primary[500]})`,
+          backgroundImage: (theme) => `linear-gradient( ${theme.palette.primary[300]}, ${theme.palette.primary[500]})`,
         }}
       >
         <Icon sx={{ color: "#fff" }} />
@@ -92,23 +90,11 @@ const Referral = () => {
           <Typography variant="h4" color="text.primary">
             Earn up to <b>₹200</b> on every referral.
           </Typography>
-          <Typography
-            textAlign="center"
-            color="text.secondary"
-            variant="body2"
-            sx={{ whiteSpace: "pre-wrap" }}
-          >
-            For every qualified referee who subscribes to BharatBiz, {"\n"}{" "}
-            we'll give both of you a <b>₹200</b> credit.
+          <Typography textAlign="center" color="text.secondary" variant="body2" sx={{ whiteSpace: "pre-wrap" }}>
+            For every qualified referee who subscribes to BharatBiz, {"\n"} we'll give both of you a <b>₹200</b> credit.
           </Typography>
         </Stack>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          spacing={4}
-          divider={<ArrowForward />}
-        >
+        <Stack direction="row" alignItems="center" justifyContent="center" spacing={4} divider={<ArrowForward />}>
           {Steps.map((step, index) => (
             <Stack key={index} alignItems="center" spacing={1}>
               <IconWrapper Icon={step.icon} />
@@ -118,9 +104,7 @@ const Referral = () => {
         </Stack>
 
         <Stack alignItems="center">
-          <Typography variant="caption">
-            Copy the link below and share it with your referee
-          </Typography>
+          <Typography variant="caption">Copy the link below and share it with your referee</Typography>
           <Stack direction="row" spacing={2}>
             <OutlinedInput
               value={link}
@@ -143,34 +127,57 @@ const Referral = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>
-                      <Typography variant="caption">Name</Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="caption">Email</Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="caption">Joined At</Typography>
-                    </TableCell>
+                    <TableCell>User</TableCell>
+                    <TableCell>Business</TableCell>
+                    <TableCell>Joined Date</TableCell>
+                    <TableCell>Plan End Date </TableCell>
+                    <TableCell>Plan</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {referrals.map((referral) => (
-                    <TableRow>
+                  {referrals.map((user) => (
+                    <TableRow key={user._id}>
                       <TableCell>
-                        <Typography variant="caption">
-                          {referral?.name}
-                        </Typography>
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          {user.profilePicUrl ? <Avatar src={user.profilePicUrl} /> : <RandomAvatar name={user.name} />}
+                          <Stack>
+                            <Typography fontWeight={600}>{user.name}</Typography>
+                            <Typography variant="caption">{user.email}</Typography>
+                          </Stack>
+                        </Stack>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="caption">
-                          {referral?.email}
-                        </Typography>
+                        {user.business?._id ? (
+                          <Stack>
+                            <Typography variant="subtitle2">
+                              <b> Name:</b> {user.business?.name}
+                            </Typography>
+
+                            <Typography variant="subtitle2">
+                              <b> Link :</b>
+                              <Link target="_blank" href={`${id_app_url}/${user.business?.linkId}`}>
+                                {" "}
+                                {user.business?.linkId}{" "}
+                              </Link>
+                            </Typography>
+                          </Stack>
+                        ) : (
+                          <Chip label="Not Created" variant="filled" color="error" />
+                        )}
                       </TableCell>
                       <TableCell>
-                        <Typography variant="caption">
-                          {new Date(referral?.createdAt).toLocaleDateString()}
-                        </Typography>
+                        <Typography variant="subtitle2">{moment(user.createdAt).format("DD MMMM YYYY")}</Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography variant="subtitle2">{moment(user.plan_end_date).format("DD MMMM YYYY")}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          label={user.is_paid_plan === "ACTIVE" ? "Paid" : "Trial"}
+                          variant="filled"
+                          color={user.is_paid_plan === "ACTIVE" ? "success" : "warning"}
+                        />
                       </TableCell>
                     </TableRow>
                   ))}

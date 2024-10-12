@@ -114,6 +114,22 @@ const getTheme = (mode: mode): ThemeOptions => ({
         },
       },
     },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          whiteSpace: "nowrap", // Prevent text from wrapping
+          overflow: "hidden", // Hide overflowed text
+          textOverflow: "ellipsis", // Add "..." for overflowed text
+        },
+      },
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          backgroundColor: mode === "dark" ? primary[900] : primary[100],
+        },
+      },
+    },
     MuiSvgIcon: {
       styleOverrides: {
         fontSizeSmall: {

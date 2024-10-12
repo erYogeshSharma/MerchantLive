@@ -22,6 +22,11 @@ export type User = {
   role: UserRole;
   profilePicUrl: string;
   referralCode: string;
+  createdAt: string;
+  updatedAt: string;
+  plan_start_date: string;
+  plan_end_date: string;
+  is_paid_plan: "ACTIVE" | "INACTIVE";
 };
 export type AuthResponse = {
   statusCode: string;

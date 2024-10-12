@@ -20,6 +20,11 @@ const initialState: AuthState = {
     role: "USER",
     profilePicUrl: "",
     referralCode: "",
+    createdAt: "",
+    updatedAt: "",
+    plan_start_date: "",
+    plan_end_date: "",
+    is_paid_plan: "ACTIVE",
   },
   tokens: {
     accessToken: "",
